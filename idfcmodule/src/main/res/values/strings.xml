@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">IDFCModule</string>
+
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="please_try_again">Please Try Again</string>
+
+    <string name="submit">Submit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="doorstep_banking">DoorStep Banking</string>
+    <string name="phone">Phone</string>
+    <string name="user_name">User Name</string>
+    <string name="name">Name</string>
+    <string name="users">Users</string>
+
+    <string name="police_verification">All retailer must be police and local address verified.</string>
+    <string name="search_username_mobile_no">Search name/user id/mobile no.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="star">************</string>
+    <string name="next">Next</string>
+    <string name="dob">Dob</string>
+    <string name="aadharno">Aadhar No</string>
+    <string name="address_idfc">Address</string>
+    <string name="upload_ndocument">Upload\nDocument</string>
+    <string name="upload_nselfie">Upload\nSelfie</string>
+    <string name="aadhar_nverification">Aadhar\nVerification</string>
+    <string name="idfc_door_step_banking_kyc">IDFC Door Step Banking KYC</string>
+    <string name="retailers">Retailers</string>
+    <string name="application_submitted">Your application has been submitted successfully.\nKindly await for administrative approval.</string>
+    <string name="address_type">Address Type</string>
+    <string name="select_pv">Select PV</string>
+    <string name="pv_address_text">Upload police verification and local address verification document</string>
+    <string name="upload_document">Upload Document</string>
+    <string name="search_job_id">Search Customer</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="job_subtype">Job Subtype</string>
+    <string name="job_type">Job Type</string>
+    <string name="job_id">Job ID</string>
+    <string name="search_name_user_id">Search Name/User ID</string>
+
+</resources>

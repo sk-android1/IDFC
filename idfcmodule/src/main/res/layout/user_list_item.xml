@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="@dimen/_5dp"
+    android:layout_marginVertical="2dp"
+    android:background="@drawable/card_gradient"
+    android:padding="@dimen/_5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_inside_gradient"
+        android:orientation="vertical"
+        android:paddingVertical="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="@string/name"
+                 />
+
+            <View
+                style="@style/horizontalDividerStyle" />
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tvName"
+                style="@style/normalTextStyle"
+                android:text="@string/name"
+                />
+
+        </LinearLayout>
+
+        <View
+            style="@style/verticalDividerStyle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="User ID"
+                 />
+
+            <View
+                style="@style/horizontalDividerStyle" />
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tvUserName"
+                style="@style/normalTextStyle"
+                android:text="@string/user_name"
+                />
+
+        </LinearLayout>
+
+        <View
+            style="@style/verticalDividerStyle" />
+
+
+        <LinearLayout
+            android:id="@+id/phone_ly"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="@string/phone"
+                 />
+
+            <View
+                style="@style/horizontalDividerStyle" />
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tv_phone"
+                style="@style/normalTextStyle"
+                android:text="@string/phone"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/phoneView"
+            style="@style/verticalDividerStyle"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/kycLy"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="Self KYC"
+                />
+
+            <View
+                style="@style/horizontalDividerStyle" />
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tv_kyc"
+                style="@style/normalTextStyle"
+                android:text="@string/star"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/kycView"
+            style="@style/verticalDividerStyle"
+            android:visibility="gone"
+            tools:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/statusLy"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="Status"
+                />
+
+            <View
+                style="@style/horizontalDividerStyle" />
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tvStatus"
+                style="@style/normalTextStyle"
+                android:text="@string/star"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/statusView"
+            style="@style/verticalDividerStyle"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/adminApprovalLy"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="Admin Approval"
+                />
+
+            <View
+                style="@style/horizontalDividerStyle"/>
+
+            <TextView
+                android:paddingVertical="@dimen/_4dp"
+                android:id="@+id/tvApproval"
+                style="@style/normalTextStyle"
+                android:text="@string/star"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/approvedLyView"
+            style="@style/verticalDividerStyle"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/assignedLy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/normalTextStyle"
+                android:text="@string/doorstep_banking"
+                />
+
+            <View
+                style="@style/horizontalDividerStyle"/>
+
+            <FrameLayout
+                android:id="@+id/switchFrameLy"
+                android:paddingVertical="@dimen/_4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swIdfc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="@string/no"
+                    />
+
+<!--                app:thumbTint="@color/dark_grey"-->
+<!--                app:trackTint="@color/grey"-->
+
+            </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

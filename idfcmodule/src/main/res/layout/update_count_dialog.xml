@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rounded_back"
+    android:paddingHorizontal="@dimen/_15dp"
+    android:paddingTop="@dimen/_30dp"
+    android:paddingBottom="@dimen/_55dp"
+    android:layout_margin="@dimen/_5dp"
+    android:elevation="@dimen/_5dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvChequeUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cheque Update"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tvUpdateCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Count "
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_15dp"/>
+
+    <EditText
+        android:id="@+id/tvCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Here "
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_5dp"
+        android:background="@drawable/rounded_light_blue_back"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="@dimen/_20dp"
+        android:inputType="number"
+        android:maxLength="3"/>
+
+    <TextView
+        android:id="@+id/tvUpdateAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Amount"
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_15dp"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Here"
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_5dp"
+        android:background="@drawable/rounded_light_blue_back"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="@dimen/_20dp"
+        android:inputType="number"
+        android:maxLength="6"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_30dp">
+        <TextView
+            android:id="@+id/tvSubmit"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
+            android:background="@drawable/rounded_green_back"
+            android:gravity="center"
+            android:padding="@dimen/_8dp"
+            android:layout_marginEnd="@dimen/_10dp"/>
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_semibold"
+            android:background="@drawable/rounded_red2"
+            android:gravity="center"
+            android:padding="@dimen/_8dp"
+            android:layout_marginStart="@dimen/_10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

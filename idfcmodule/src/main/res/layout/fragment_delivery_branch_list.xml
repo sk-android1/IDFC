@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/lead_main_bg"
+    tools:context=".lead.DeliveryBranchListFragment">
+
+    <include layout="@layout/lead_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/leadTopLy"/>
+
+    <ImageView
+        android:id="@+id/imgMap"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toBottomOf="@+id/leadTopLy"
+        android:src="@drawable/googlemap"
+        android:scaleType="fitXY"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/imgMap"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/rounded_back"
+        android:paddingTop="@dimen/_10dp"
+        android:paddingBottom="@dimen/_15dp"
+        android:layout_marginTop="-50dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delivery Branch List"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/searchLy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_edit2"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10dp"
+            >
+            <EditText
+                android:layout_weight="1"
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:gravity="start"
+                android:hint="Search Branc"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/_16sp"
+                android:fontFamily="@font/montserrat_regular"/>
+
+            <ImageView
+                android:id="@+id/imgClear"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:src="@drawable/close"
+                android:padding="5dp"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

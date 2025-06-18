@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/lead_main_bg"
+    tools:context=".lead.DeliveredChequeUploadFragment">
+
+    <include layout="@layout/lead_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/leadTopLy"/>
+
+    <LinearLayout
+        android:id="@+id/checkCountLy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/leadTopLy"
+        android:layout_margin="@dimen/_10dp"
+        android:background="@drawable/rounded_back"
+        android:padding="@dimen/_10dp">
+        <ImageView
+            android:layout_width="@dimen/_40dp"
+            android:layout_height="@dimen/_40dp"
+            android:src="@drawable/idfc_profile"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manish Gaur"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat_semibold"
+                android:id="@+id/tvJobId"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No. Cheque : "
+                    android:fontFamily="@font/montserrat_regular"/>
+                <TextView
+                    android:id="@+id/tvCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="********"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/amountLy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount : "
+                    android:fontFamily="@font/montserrat_regular"/>
+                <TextView
+                    android:id="@+id/tvChqAmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*********"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/montserrat_semibold"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tvUpdateCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Count"
+            android:textColor="@color/white"
+            android:fontFamily="@font/montserrat_regular"
+            android:background="@drawable/rounded_blue_back2"
+            android:paddingVertical="@dimen/_5dp"
+            android:paddingHorizontal="@dimen/_10dp"
+            android:textSize="@dimen/_10sp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textChequeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cheque Details"
+        android:textSize="16sp"
+        android:letterSpacing="0.05"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_semibold"
+        android:layout_marginStart="@dimen/_20dp"
+        app:layout_constraintTop_toBottomOf="@+id/checkCountLy"
+        android:layout_marginTop="50dp"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_grey_idfc"
+        app:layout_constraintTop_toBottomOf="@+id/textChequeDetails"
+        android:layout_marginTop="10dp"/>
+    
+    <LinearLayout
+        android:id="@+id/numberLy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/_55dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:textColor="@color/blue"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_semibold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload image Cheque"
+            android:textColor="@color/blue"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:layout_marginStart="@dimen/_30dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/numberLy"
+        app:layout_constraintBottom_toTopOf="@+id/tvSubmit"
+        android:layout_marginBottom="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/viewFinal">
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/montserrat_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/tvCancelReq"
+        android:layout_marginHorizontal="@dimen/_40dp"
+        android:paddingVertical="@dimen/_10dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:background="@drawable/rounded_green_back"/>
+
+    <TextView
+        android:id="@+id/tvCancelReq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel Request"
+        android:textSize="15sp"
+        android:textColor="@color/red"
+        android:fontFamily="@font/montserrat_semibold"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="@dimen/_40dp"
+        android:paddingVertical="@dimen/_10dp"
+        android:paddingHorizontal="@dimen/_30dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:background="@drawable/rounded_red_border2"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">IDFC</string>
+    <string name="submit">Submit</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="doorstep_banking">DoorStep Banking</string>
+    <string name="phone">Phone</string>
+    <string name="user_name">User Name</string>
+    <string name="name">Name</string>
+    <string name="users">Users</string>
+</resources>

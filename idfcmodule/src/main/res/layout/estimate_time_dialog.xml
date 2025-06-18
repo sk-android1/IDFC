@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_back"
+    android:paddingHorizontal="@dimen/_20dp"
+    android:paddingTop="@dimen/_30dp"
+    android:paddingBottom="@dimen/_55dp"
+
+    android:elevation="@dimen/_5dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:src="@drawable/watch"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Estimated Waiting Time"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_semibold"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_20dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_15dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_8dp"
+        android:paddingHorizontal="@dimen/_40dp"
+        android:background="@drawable/rounded_light_blue_back"
+        >
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/watch2"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/tvWaitingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 Hr 45 mins "
+            android:textSize="13sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_gravity="center"
+            android:textColor="@color/sky_blue"
+            android:layout_marginStart="@dimen/_10dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Proceed to journey button will be activated once the estimated waiting time will be completed."
+        android:textSize="13sp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"
+        android:textColor="@color/grey"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_10dp"/>
+
+</LinearLayout>

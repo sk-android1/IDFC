@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:layout_marginHorizontal="@dimen/_5dp"
+            android:layout_marginBottom="@dimen/_5dp"
+            android:layout_marginTop="@dimen/_5dp"
+            android:background="@drawable/white_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:elevation="2dp">
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginTop="@dimen/_15dp">
+
+                <ImageView
+                    android:id="@+id/imgDropUp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/dropup"
+                    android:layout_marginHorizontal="5dp"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/textBankName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bank Name"
+                        android:textColor="@color/dark_grey_idfc"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                        />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/etBankName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:paddingHorizontal="@dimen/_15dp"
+                        android:background="@drawable/border_edit2"
+                        android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
+                        android:hint="Select Bank"
+                        android:textSize="@dimen/_16sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/textChqNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cheque Number"
+                        android:textColor="@color/dark_grey_idfc"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                       />
+
+                    <EditText
+                        android:id="@+id/etChequeNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:paddingHorizontal="@dimen/_15dp"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:background="@drawable/border_edit2"
+                        android:inputType="number"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/textChqAmt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Cheque Amount"
+                        android:textColor="@color/dark_grey_idfc"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:fontFamily="@font/montserrat_regular"
+                       />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:paddingVertical="@dimen/_8dp"
+                        android:paddingHorizontal="@dimen/_15dp"
+                        android:background="@drawable/border_edit2">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="\u20b9"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:textSize="18sp"/>
+                        <EditText
+                            android:id="@+id/etChequeAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:background="@android:color/transparent"
+                            android:layout_marginStart="3dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_15dp"
+                android:layout_marginBottom="@dimen/_15dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imgDropdown"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/dropdown"
+                    android:layout_marginHorizontal="5dp"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload image cheque"
+                        android:textColor="@color/dark_grey_idfc"
+                        android:layout_marginHorizontal="@dimen/_10dp"
+
+                        android:fontFamily="@font/montserrat_regular"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/_5dp">
+
+                        <TextView
+                            android:id="@+id/tvNumbering"
+                            android:layout_width="@dimen/_45dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/_10dp"
+                            android:background="@drawable/border_edit2"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:visibility="gone"
+                            tools:visibility="visible"/>
+
+                        <LinearLayout
+                            android:id="@+id/browseLy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="@dimen/_10dp"
+                            android:background="@drawable/border_edit2">
+                            <TextView
+                                android:id="@+id/tvUploadImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:gravity="center_vertical"
+                                android:paddingStart="@dimen/_15dp"
+                                android:text="Upload cheque 1"
+                                android:textColor="@color/dark_grey_idfc" />
+                            <TextView
+                                android:id="@+id/tvBrowse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Browse"
+                                android:textSize="@dimen/_12sp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/gray_back"
+                                android:padding="6dp"
+                                android:textColor="@color/white"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/montserrat_regular"
+                               android:clickable="false"
+                                android:enabled="false"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvCancel"
+                            android:layout_width="@dimen/_30dp"
+                            android:layout_height="@dimen/_30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="@dimen/_10dp"
+                            android:background="@drawable/rounded_red_border"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:gravity="center"
+                            android:text="X"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_16sp"
+                            android:visibility="gone"
+                            tools:visibility="visible"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

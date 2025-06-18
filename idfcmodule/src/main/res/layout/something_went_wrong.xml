@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/base_color"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/circular_drawable"
+        android:padding="@dimen/_40dp"
+        android:src="@drawable/something_went_wrong_dec"
+        android:text="Api Failed"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14sp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_10dp"
+        android:text="@string/something_went_wrong"
+        android:textColor="@color/purple_700"
+        android:textSize="@dimen/_14sp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_10dp"
+        android:text="There seems to be an issue fetching details. Please try again."
+        android:layout_marginHorizontal="@dimen/_45dp"
+        android:textSize="@dimen/_14sp"
+        android:fontFamily="@font/montserrat_regular"
+        android:gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/refreshButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40dp"
+        android:background="@drawable/button_on_dec"
+        android:paddingVertical="@dimen/_20dp"
+        android:layout_marginHorizontal="@dimen/_20dp"
+        android:text="@string/please_try_again"
+        android:textColor="@color/white" />
+
+</LinearLayout>

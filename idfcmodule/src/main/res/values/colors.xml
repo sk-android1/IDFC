@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="alpha_black">#DC000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="purple_700">#101F33</color>
+    <color name="base_color">#F0F0F8</color>
+    <color name="light_grey_idfc">#E0E0E0</color>
+    <color name="light_grey">#E0E0E0</color>
+    <color name="grey_idfc">#A8A8A8</color>
+    <color name="grey">#A8A8A8</color>
+    <color name="dark_grey_idfc">#707070</color>
+    <color name="dark_grey">#707070</color>
+    <color name="blue">#000537</color>
+    <color name="sky_blue">#0077AC</color>
+    <color name="light_sky_blue">#C0DEED</color>
+    <color name="light_sky_blue2">#F9FFFE</color>
+    <color name="light_purple">#FBF0FD</color>
+    <color name="vidcom_color">#F7B516</color>
+    <color name="green">#1D9901</color>
+    <color name="green2">#00C157</color>
+    <color name="dark_green">#188500</color>
+    <color name="dark_green2">#00A84B</color>
+    <color name="light_green">#EEFFF6</color>
+    <color name="red">#E00000</color>
+    <color name="alpha_red">#BECE0000</color>
+    <color name="orange">#FB8830</color>
+    <color name="yellow">#FFD500</color>
+    <color name="search_color">#283446</color>
+    <color name="toolbar_color">#101F33</color>
+</resources>
