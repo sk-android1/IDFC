@@ -1,6 +1,5 @@
 package com.service.idfcmodule.fragments;
 
-import static com.service.idfcmodule.IdfcMainActivity.appType;
 import static com.service.idfcmodule.IdfcMainActivity.comType;
 
 import android.app.Activity;
@@ -11,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +36,6 @@ import com.service.idfcmodule.utils.MyConstantKey;
 import com.service.idfcmodule.utils.MyErrorDialog;
 import com.service.idfcmodule.utils.MyProgressDialog;
 import com.service.idfcmodule.utils.NetworkUtils;
-import com.service.idfcmodule.utils.UserListSingelton;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
 import org.json.JSONArray;
@@ -169,7 +166,7 @@ public class AsmRetAssignFragment extends Fragment {
     }
 
     private void saveAgentByAsm(String assignRetList) {
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().saveAgentByAsm(IdfcMainActivity.asmId, IdfcMainActivity.bankId, assignRetList)
                 .enqueue(new Callback<JsonObject>() {
@@ -230,7 +227,7 @@ public class AsmRetAssignFragment extends Fragment {
     }
 
     private void getAgentAssignedList() {
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().agentAssignedList(IdfcMainActivity.asmId).enqueue(new Callback<JsonObject>() {

@@ -17,7 +17,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.service.idfcmodule.IdfcMainActivity;
@@ -108,7 +107,7 @@ public class AsmRetAssignListFragment extends Fragment {
     }
 
     private void getAgentAssignedList() {
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().agentAssignedList(IdfcMainActivity.asmId).enqueue(new Callback<JsonObject>() {

@@ -1,5 +1,6 @@
 package com.service.idfcmodule.lead;
 
+import static com.service.idfcmodule.IdfcMainActivity.comType;
 import static com.service.idfcmodule.IdfcMainActivity.retailerId;
 import static com.service.idfcmodule.utils.CancelRequest.getRemarkList;
 
@@ -7,10 +8,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,7 +23,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.service.idfcmodule.databinding.FragmentCloseSRBinding;
+import com.service.idfcmodule.R;
 import com.service.idfcmodule.databinding.FragmentCloseSrAcceptanceBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
 import com.service.idfcmodule.utils.MyConstantKey;
@@ -99,7 +102,7 @@ public class CloseSrAcceptanceFragment extends Fragment {
 
     private void closeSrEnq() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().closeSrEnq(leadId, retailerId)
                 .enqueue(new Callback<JsonObject>() {

@@ -22,6 +22,7 @@
         android:visibility="visible"
         tools:visibility="visible"/>
 
+
     <TextView
         android:id="@+id/tvRetailer"
         android:layout_width="match_parent"
@@ -75,5 +76,6 @@
         android:textColor="@color/sky_blue"
         android:visibility="visible"
         tools:visibility="visible"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

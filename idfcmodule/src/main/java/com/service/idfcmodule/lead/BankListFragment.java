@@ -5,10 +5,12 @@ import static com.service.idfcmodule.IdfcMainActivity.comType;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +30,6 @@ import com.service.idfcmodule.utils.MyConstantKey;
 import com.service.idfcmodule.utils.MyErrorDialog;
 import com.service.idfcmodule.utils.MyProgressDialog;
 import com.service.idfcmodule.utils.NetworkUtils;
-import com.service.idfcmodule.myinterface.LeadItemClicked;
 import com.service.idfcmodule.utils.ReplaceFragmentUtils;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
@@ -57,16 +58,20 @@ public class BankListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (comType.equalsIgnoreCase("Vidcom")) requireActivity().setTheme(R.style.vidcom);
-        else requireActivity().setTheme(R.style.relipay);
+
+        requireActivity().setTheme(comType.equalsIgnoreCase("Vidcom") ? R.style.vidcom : R.style.relipay);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-     //   return inflater.inflate(R.layout.fragment_bank_list, container, false);
         binding = FragmentBankListBinding.inflate(inflater);
+
+        if (comType.equalsIgnoreCase("Vidcom")) {
+            ImageViewCompat.setImageTintList(binding.leadTopLy.imgBack, ColorStateList.valueOf(getResources().getColor(R.color.vidcom_color)));
+        }
 
         context = requireContext();
         activity = requireActivity();
@@ -114,7 +119,7 @@ public class BankListFragment extends Fragment {
 
     private void getBankList() {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().getBankList().enqueue(new Callback<JsonObject>() {

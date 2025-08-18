@@ -173,7 +173,10 @@ public class DeliveredChequeUploadFragment extends Fragment {
         });
 
         binding.tvSubmit.setOnClickListener(v -> {
-            submitDocument();
+
+
+                submitDocument();
+
         });
 
         binding.tvCancelReq.setOnClickListener(view -> {
@@ -192,9 +195,11 @@ public class DeliveredChequeUploadFragment extends Fragment {
         binding1.tvNumbering.setText((number + 1) + "");
         binding1.tvUploadImage.setText("Upload Cheque " + (number + 1));
 
+
         binding1.layout1.setOnClickListener(view -> {
 
             binding1.layout1.setVisibility(View.GONE);
+            binding1.imgDropdown.setVisibility(View.INVISIBLE);
             binding1.layout2.setVisibility(View.VISIBLE);
             binding1.imgDropdown.setVisibility(View.VISIBLE);
 
@@ -202,9 +207,13 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
         binding1.layout2.setOnClickListener(view -> {
 
-            binding1.layout1.setVisibility(View.VISIBLE);
-            binding1.imgDropdown.setVisibility(View.INVISIBLE);
-            binding1.imgDropUp.setVisibility(View.VISIBLE);
+
+               binding1.layout1.setVisibility(View.VISIBLE);
+               binding1.imgDropdown.setVisibility(View.INVISIBLE);
+               binding1.imgDropUp.setVisibility(View.VISIBLE);
+               binding1.imgDropdown.setVisibility(View.INVISIBLE);
+
+
         });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, bankList);
@@ -315,9 +324,11 @@ public class DeliveredChequeUploadFragment extends Fragment {
             binding1.etChequeNo.setEnabled(true);
             binding1.etChequeAmount.setEnabled(true);
 
-            binding1.layout1.setVisibility(View.VISIBLE);
-            binding1.imgDropdown.setVisibility(View.INVISIBLE);
-            binding1.imgDropUp.setVisibility(View.VISIBLE);
+
+               binding1.layout1.setVisibility(View.VISIBLE);
+               binding1.imgDropdown.setVisibility(View.INVISIBLE);
+               binding1.imgDropUp.setVisibility(View.VISIBLE);
+
 
             int id = binding1.tvUploadImage.getId();
 
@@ -342,31 +353,31 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
     private boolean checkInput(DynamicLayoutBinding binding) {
 
-        if (!TextUtils.isEmpty(binding.etBankName.getText().toString())) {
-            if (!TextUtils.isEmpty(binding.etChequeNo.getText().toString())) {
-                if (!TextUtils.isEmpty(binding.etChequeAmount.getText().toString())) {
-                    if (!binding.etChequeAmount.getText().toString().equalsIgnoreCase("0")) {
-                        binding.tvBrowse.setBackgroundResource(R.drawable.rounded_green_back);
-                        return true;
+
+            if (!TextUtils.isEmpty(binding.etBankName.getText().toString())) {
+                if (!TextUtils.isEmpty(binding.etChequeNo.getText().toString())) {
+                    if (!TextUtils.isEmpty(binding.etChequeAmount.getText().toString())) {
+                        if (!binding.etChequeAmount.getText().toString().equalsIgnoreCase("0")) {
+                            binding.tvBrowse.setBackgroundResource(R.drawable.rounded_green_back);
+                            return true;
+                        } else {
+                            binding.etChequeAmount.setError("Invalid Amount");
+                            return false;
+                        }
+
                     } else {
-                        binding.etChequeAmount.setError("Invalid Amount");
+                        binding.etChequeAmount.setError("Required");
                         return false;
                     }
-
                 } else {
-                    binding.etChequeAmount.setError("Required");
+                    binding.etChequeNo.setError("Required");
                     return false;
                 }
             } else {
-                binding.etChequeNo.setError("Required");
+                binding.etBankName.setError("Required");
                 return false;
             }
-        } else {
-            binding.etBankName.setError("Required");
-            return false;
         }
-
-    }
 
     private void openCamera() {
 
@@ -385,6 +396,8 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
             if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipaySDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY, photoFile);
+            else if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipayPartnerSDK"))
+                photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY_PARTNER, photoFile);
             else if (IdfcMainActivity.loginType.equalsIgnoreCase("VidcomSDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_VIDCOM, photoFile);
             else
@@ -444,7 +457,10 @@ public class DeliveredChequeUploadFragment extends Fragment {
                 binding2.etChequeAmount.setEnabled(false);
 
                 binding2.layout1.setVisibility(View.GONE);
-                binding2.imgDropdown.setVisibility(View.VISIBLE);
+
+                if (intCount < 6){
+                    binding2.imgDropdown.setVisibility(View.VISIBLE);
+                }
                 binding2.imgDropUp.setVisibility(View.GONE);
 
                 bankName = binding2.etBankName.getText().toString();
@@ -454,11 +470,19 @@ public class DeliveredChequeUploadFragment extends Fragment {
                 try {
                     JSONObject chq_obj = new JSONObject();
 
-                    chq_obj.put("bank_name", bankName);
-                    chq_obj.put("chq_no", chequeNo);
-                    chq_obj.put("chq_amt", chequeAmt);
-                  //  chq_obj.put("image_name",filReceiptImage.getName() );
-                    chq_obj.put("image", base64String);
+                    if (intCount<6)
+                    {
+                        chq_obj.put("bank_name", bankName);
+                        chq_obj.put("chq_no", chequeNo);
+                        chq_obj.put("chq_amt", chequeAmt);
+                        //  chq_obj.put("image_name",filReceiptImage.getName() );
+                        chq_obj.put("image", base64String);
+                    }
+                    else {
+                        chq_obj.put("image", base64String);
+                    }
+
+
 
                     imgJsonArray.put(chq_obj);
 
@@ -489,7 +513,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
     private void getBankList() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().bankList( retailerId)
                 .enqueue(new Callback<JsonObject>() {
@@ -564,7 +588,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
     private void uploadDeliveredDocument(String leadId, String amount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
 //        String bn = uploadBankNameArr.toString();
 //        String cn = uploadChqNoArr.toString();
@@ -691,7 +715,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
     private void updateCount(EditText etCount, EditText etAmount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         count = etCount.getText().toString().trim();
         String strAmount = etAmount.getText().toString().trim();
@@ -786,8 +810,8 @@ public class DeliveredChequeUploadFragment extends Fragment {
                     iAmount2 = iAmount + iAmount2;
 
                     DecimalFormat df = new DecimalFormat("#");        // for remove long value scientific format
-                     strTtlChqAmt = (df.format(iAmount2));
-                 //      Toast.makeText(activity, strTtlChqAmt, Toast.LENGTH_SHORT).show();
+                    strTtlChqAmt = (df.format(iAmount2));
+                    //      Toast.makeText(activity, strTtlChqAmt, Toast.LENGTH_SHORT).show();
 
 //                    RequestBody bankNameBody = RequestBody.create(MediaType.parse("text/plain"), bankName);
 //                    RequestBody chequeNoBody = RequestBody.create(MediaType.parse("text/plain"), chequeNo);
@@ -859,4 +883,4 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
     }
 
-}
+    }

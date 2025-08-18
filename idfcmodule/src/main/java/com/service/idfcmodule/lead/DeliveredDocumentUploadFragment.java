@@ -227,6 +227,8 @@ public class DeliveredDocumentUploadFragment extends Fragment {
 
             if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipaySDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY, photoFile);
+            else if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipayPartnerSDK"))
+                photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY_PARTNER, photoFile);
             else if (IdfcMainActivity.loginType.equalsIgnoreCase("VidcomSDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_VIDCOM, photoFile);
             else
@@ -318,7 +320,7 @@ public class DeliveredDocumentUploadFragment extends Fragment {
 
     private void uploadDeliveredDocument(String leadId) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody rbLeadId = RequestBody.create(MediaType.parse("text/plain"), leadId);
@@ -431,7 +433,7 @@ public class DeliveredDocumentUploadFragment extends Fragment {
 
     private void updateCount(EditText etCount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         String strCount = etCount.getText().toString().trim();
 

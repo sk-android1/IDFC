@@ -66,6 +66,16 @@ public class DeliveryBranchListAdapter extends RecyclerView.Adapter<DeliveryBran
         return arrayList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         BranchListItemBinding binding;

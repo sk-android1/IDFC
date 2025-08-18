@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +77,10 @@ public class LeadListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentLeadListBinding.inflate(inflater);
+
+        if (comType.equalsIgnoreCase("Vidcom")){
+            ImageViewCompat.setImageTintList(binding.leadTopLy.imgBack, ColorStateList.valueOf(getResources().getColor(R.color.vidcom_color)));
+        }
 
         context = requireContext();
         activity = requireActivity();
@@ -173,7 +179,7 @@ public class LeadListFragment extends Fragment {
 
     private void getLeadList(String leadStatus) {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().getLeadList(bankId, retailerId, leadStatus).enqueue(new Callback<JsonObject>() {
@@ -344,7 +350,7 @@ public class LeadListFragment extends Fragment {
 
     private void assignLead(String leadId) {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().allocatedLead(leadId, retailerId).enqueue(new Callback<JsonObject>() {
@@ -395,7 +401,7 @@ public class LeadListFragment extends Fragment {
 
     private void startJourney(String leadId, String stage, String amount, String count) {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().startJourney(leadId, retailerId).enqueue(new Callback<JsonObject>() {

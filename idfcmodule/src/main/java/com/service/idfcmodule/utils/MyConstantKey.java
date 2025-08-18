@@ -17,6 +17,15 @@ public class MyConstantKey {
     public static String LONGITUDE = "longitude";
     public static String LOGIN_TYPE = "loginType";
 
+    public static String RETAILER = "Retailer";
+    public static String PARTNER = "Partner";
+    public static String RELIPAY = "Relipay";
+    public static String VIDCOM = "Vidcom";
+    public static String RELIPAY_SDK = "RelipaySDK";
+    public static String VIDCOM_SDK = "VidcomSDK";
+    public static String RELIPAY_PARTNER_SDK = "RelipayPartnerSDK";
+    public static String APP = "APP";
+
     public static String JOB_ID = "jobId";
     public static String SR_NO = "srno";
     public static String LEAD_ID = "leadId";
@@ -46,6 +55,7 @@ public class MyConstantKey {
 
 
     public static final String PROVIDER_RELIPAY = "com.services.relipay.rabbit_dynamic.provider";
+    public static final String PROVIDER_RELIPAY_PARTNER = "com.services.relipaypartner";
     public static final String PROVIDER_VIDCOM = "com.business.vidcom.rabbit_dynamic.provider";
     public static final String PROVIDER_APP = "com.service.idfc";
 

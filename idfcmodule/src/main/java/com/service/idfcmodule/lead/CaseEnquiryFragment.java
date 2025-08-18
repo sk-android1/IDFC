@@ -1,5 +1,6 @@
 package com.service.idfcmodule.lead;
 
+import static com.service.idfcmodule.IdfcMainActivity.comType;
 import static com.service.idfcmodule.IdfcMainActivity.retailerId;
 
 import static com.service.idfcmodule.utils.CancelRequest.getRemarkList;
@@ -8,18 +9,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +70,11 @@ public class CaseEnquiryFragment extends Fragment {
 
         binding = FragmentCaseEnquiryBinding.inflate(inflater);
 
+        if (comType.equalsIgnoreCase("Vidcom")){
+            ImageViewCompat.setImageTintList(binding.leadTopLy.imgBack, ColorStateList.valueOf(getResources().getColor(R.color.vidcom_color)));
+            binding.imgEnquiry.setImageResource(R.drawable.enquiry2);
+        }
+
         activity = requireActivity();
         context = requireContext();
 
@@ -108,7 +115,7 @@ public class CaseEnquiryFragment extends Fragment {
 
     private void caseEnquiry() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().caseEnquiry(leadId, retailerId)
                 .enqueue(new Callback<JsonObject>() {
@@ -211,7 +218,8 @@ public class CaseEnquiryFragment extends Fragment {
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                 bundle.putString(MyConstantKey.REATTEMPT, "1");
              //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
-                ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+              //  ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+                ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
             } else if (jobSubType.equalsIgnoreCase("document")) {
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.COUNT, count);

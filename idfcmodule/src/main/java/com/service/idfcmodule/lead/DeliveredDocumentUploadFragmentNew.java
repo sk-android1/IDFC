@@ -42,7 +42,6 @@ import com.google.gson.JsonObject;
 import com.service.idfcmodule.IdfcMainActivity;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.databinding.DynamicLayout2Binding;
-import com.service.idfcmodule.databinding.FragmentDeliveredDocumentUploadBinding;
 import com.service.idfcmodule.databinding.FragmentDeliveredDocumentUploadNewBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
 import com.service.idfcmodule.utils.BitmapUtils;
@@ -220,6 +219,8 @@ public class DeliveredDocumentUploadFragmentNew extends Fragment {
 
             if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipaySDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY, photoFile);
+            else if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipayPartnerSDK"))
+                photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY_PARTNER, photoFile);
             else if (IdfcMainActivity.loginType.equalsIgnoreCase("VidcomSDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_VIDCOM, photoFile);
             else
@@ -290,7 +291,7 @@ public class DeliveredDocumentUploadFragmentNew extends Fragment {
 
     private void uploadImage() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -374,7 +375,7 @@ public class DeliveredDocumentUploadFragmentNew extends Fragment {
 
     private void uploadDeliveredDocument(String leadId) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody rbLeadId = RequestBody.create(MediaType.parse("text/plain"), leadId);
@@ -487,7 +488,7 @@ public class DeliveredDocumentUploadFragmentNew extends Fragment {
 
     private void updateCount(EditText etCount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         String strCount = etCount.getText().toString().trim();
 

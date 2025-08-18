@@ -17,11 +17,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
-import com.service.idfcmodule.R;
 import com.service.idfcmodule.databinding.FragmentDeliveryTrackingBinding;
 import com.service.idfcmodule.utils.ConverterUtils;
 import com.service.idfcmodule.utils.MyConstantKey;
@@ -120,7 +118,7 @@ public class DeliveryTrackingFragment extends Fragment {
 
     private void closeSr(String leadId) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().closeSr(leadId, retailerId)
                 .enqueue(new Callback<JsonObject>() {

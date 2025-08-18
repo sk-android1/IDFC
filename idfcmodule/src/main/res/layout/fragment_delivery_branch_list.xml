@@ -59,7 +59,7 @@
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="5dp"
                 android:gravity="start"
-                android:hint="Search Branc"
+                android:hint="Search Branch"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@color/black"

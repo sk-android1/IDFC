@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +17,6 @@ import com.google.gson.JsonObject;
 import com.service.idfcmodule.databinding.ActivityIdfcMainBinding;
 import com.service.idfcmodule.fragments.DashboardFragment;
 import com.service.idfcmodule.lead.BankListFragment;
-import com.service.idfcmodule.lead.CashCalculateFragment;
-import com.service.idfcmodule.models.UserModel;
 import com.service.idfcmodule.retailerkyc.AadharFragment;
 import com.service.idfcmodule.retailerkyc.ApplicationApprovedFragment;
 import com.service.idfcmodule.retailerkyc.FinishFragment;
@@ -34,17 +30,10 @@ import com.service.idfcmodule.utils.ReplaceFragmentUtils;
 import com.service.idfcmodule.utils.UserListSingelton;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -104,7 +93,6 @@ public class IdfcMainActivity extends AppCompatActivity {
             } else {
                 if (networkStatus.equalsIgnoreCase("Connected")) {
                     verifyAgentApi();
-                    //   ReplaceFragmentUtils.replaceFragment(new PhotoUploadFragment(), new Bundle(), (AppCompatActivity) activity);
                 } else {
                     MyErrorDialog.activityFinishErrorDialog(context, activity, networkStatus);
                 }
@@ -133,7 +121,7 @@ public class IdfcMainActivity extends AppCompatActivity {
 
     private void verifyAgentApi() {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().verifyAgent(retailerId, panNo).enqueue(new Callback<JsonObject>() {
@@ -202,7 +190,6 @@ public class IdfcMainActivity extends AppCompatActivity {
                                     ReplaceFragmentUtils.replaceFragment(new UploadDocumentFragment(), new Bundle(), (AppCompatActivity) activity);
                                 } else if (stage.equalsIgnoreCase("4")) {
                                     String approvalStatus = responseObject.getString("approval");
-                                    //  approvalStatus = "0";
 
                                     if (approvalStatus.equalsIgnoreCase("0")) {
                                         ReplaceFragmentUtils.replaceFragment(new FinishFragment(), new Bundle(), (AppCompatActivity) activity);
@@ -264,9 +251,6 @@ public class IdfcMainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
-
-      //  outState.clear();
     }
 
     @Override

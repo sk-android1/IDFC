@@ -1,7 +1,5 @@
 package com.service.idfcmodule.utils;
 
-import static com.service.idfcmodule.IdfcMainActivity.retailerId;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,7 +43,7 @@ public class CancelRequest {
 
     @SuppressLint("SetTextI18n")
     public static void getRemarkList(Context context,Activity activity, String leadId, String retailerId) {
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().getRemark(retailerId).enqueue(new Callback<JsonObject>() {
             @Override
@@ -181,7 +179,7 @@ public class CancelRequest {
 
     private static void cancelRequest(Context context, Activity activity, String leadId, String retailerId, String remark) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().cancelRequest(leadId, retailerId,remark)
                 .enqueue(new Callback<JsonObject>() {

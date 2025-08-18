@@ -97,7 +97,7 @@ public class AadharFragment extends Fragment {
     }
 
     private void verifyAadharApi() {
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().verifyAadhaar(retailerId, IdfcMainActivity.revision, pinCode, IdfcMainActivity.latitude+","+IdfcMainActivity.longitude).enqueue(new Callback<JsonObject>() {

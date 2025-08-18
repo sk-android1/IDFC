@@ -1,5 +1,7 @@
 package com.service.idfcmodule.adaptors;
 
+import static com.service.idfcmodule.IdfcMainActivity.comType;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +24,7 @@ import com.service.idfcmodule.lead.CashCalculateFragment;
 import com.service.idfcmodule.lead.CloseSrAcceptanceFragment;
 import com.service.idfcmodule.lead.DeliveredChequeUploadFragment;
 import com.service.idfcmodule.lead.DeliveredChequeUploadFragmentNew;
+import com.service.idfcmodule.lead.DeliveredChequeUploadFragmentNew2;
 import com.service.idfcmodule.lead.DeliveredDocumentUploadFragment;
 import com.service.idfcmodule.lead.DeliveredDocumentUploadFragmentNew;
 import com.service.idfcmodule.lead.DeliveryBranchListFragment;
@@ -97,6 +100,11 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
 //        else {
 //            holder.binding.imgDropdown.setVisibility(View.GONE);
 //        }
+
+        if (comType.equalsIgnoreCase("Vidcom")) {
+            holder.binding.imgDropdown.setImageResource(R.drawable.dropdown2);
+            holder.binding.imgDropup.setImageResource(R.drawable.dropup2);
+        }
 
         if (status.equalsIgnoreCase("0")) {
             holder.binding.acceptDeclineLy.setVisibility(View.VISIBLE);
@@ -175,7 +183,8 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                     bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                     bundle.putString(MyConstantKey.REATTEMPT, "0");
                 //    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
-                    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
+                 //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
+                    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
 
                 } else if (jobSubType.equalsIgnoreCase("cash")) {
                     Bundle bundle = new Bundle();

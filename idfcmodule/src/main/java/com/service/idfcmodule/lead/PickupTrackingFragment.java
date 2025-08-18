@@ -51,7 +51,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.service.idfcmodule.IdfcMainActivity;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.databinding.FragmentPickupTrackingBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
@@ -213,7 +212,7 @@ public class PickupTrackingFragment extends Fragment {
 
     private void reachedLocation() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         String geoCode = latitude+","+longitude;
 
@@ -304,7 +303,8 @@ public class PickupTrackingFragment extends Fragment {
                 bundle.putString(MyConstantKey.SR_NO, sr_no);
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
              //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
-                ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+             //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+                ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
             } else if (type.equalsIgnoreCase("cash")) {
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.AMOUNT, amount);
@@ -337,7 +337,7 @@ public class PickupTrackingFragment extends Fragment {
 
     private void getUrlResponse(String url) {
 
-        AlertDialog pd = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
 
         RetrofitClient.getInstance().getApi().verifyUserByUrl(url).enqueue(new Callback<JsonObject>() {
@@ -579,6 +579,5 @@ public class PickupTrackingFragment extends Fragment {
     }
 
     ////////////////////////////////
-
 
 }

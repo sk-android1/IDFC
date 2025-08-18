@@ -361,6 +361,8 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
             if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipaySDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY, photoFile);
+            else if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipayPartnerSDK"))
+                photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY_PARTNER, photoFile);
             else if (IdfcMainActivity.loginType.equalsIgnoreCase("VidcomSDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_VIDCOM, photoFile);
             else
@@ -451,7 +453,7 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
     private void getBankList() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().bankList( retailerId)
                 .enqueue(new Callback<JsonObject>() {
@@ -526,7 +528,7 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
     private void uploadImage() {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
 
@@ -679,7 +681,7 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
     private void uploadDeliveredDocument(String leadId, String amount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody rbLeadId = RequestBody.create(MediaType.parse("text/plain"), leadId);
@@ -789,7 +791,7 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
     private void updateCount(EditText etCount, EditText etAmount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         count = etCount.getText().toString().trim();
         String strAmount = etAmount.getText().toString().trim();

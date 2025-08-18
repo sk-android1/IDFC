@@ -164,6 +164,8 @@ public class PhotoUploadFragment extends Fragment {
 
             if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipaySDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY, photoFile);
+            else if (IdfcMainActivity.loginType.equalsIgnoreCase("RelipayPartnerSDK"))
+                photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_RELIPAY_PARTNER, photoFile);
             else if (IdfcMainActivity.loginType.equalsIgnoreCase("VidcomSDK"))
                 photoURI = FileProvider.getUriForFile(context, MyConstantKey.PROVIDER_VIDCOM, photoFile);
             else
@@ -223,7 +225,7 @@ public class PhotoUploadFragment extends Fragment {
     });
 
     private void uploadFile() {
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody agentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody revison = RequestBody.create(MediaType.parse("text/plain"), IdfcMainActivity.revision);

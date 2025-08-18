@@ -4,28 +4,20 @@ import static android.app.Activity.RESULT_OK;
 import static com.service.idfcmodule.IdfcMainActivity.comType;
 import static com.service.idfcmodule.IdfcMainActivity.retailerId;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +28,10 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.service.idfcmodule.IdfcMainActivity;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.databinding.FragmentUploadDocumentBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
-import com.service.idfcmodule.utils.BitmapUtils;
 import com.service.idfcmodule.utils.FileUtil;
 import com.service.idfcmodule.utils.MyErrorDialog;
 import com.service.idfcmodule.utils.MyProgressDialog;
@@ -53,13 +43,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -225,7 +211,7 @@ public class UploadDocumentFragment extends Fragment {
     });
 
     private void getAddProofList() {
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().getAddProofList().enqueue(new Callback<JsonObject>() {
             @Override
@@ -276,7 +262,7 @@ public class UploadDocumentFragment extends Fragment {
     }
 
     private void uploadFile(MultipartBody.Part pvDoc, MultipartBody.Part addressDoc) {
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody agentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody addressType = RequestBody.create(MediaType.parse("text/plain"), selectedAddType);

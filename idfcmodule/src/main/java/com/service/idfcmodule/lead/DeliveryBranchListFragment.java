@@ -1,7 +1,6 @@
 package com.service.idfcmodule.lead;
 
 import static com.service.idfcmodule.IdfcMainActivity.retailerId;
-import static com.service.idfcmodule.utils.CancelRequest.getRemarkList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -21,20 +20,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.adaptors.DeliveryBranchListAdapter;
-import com.service.idfcmodule.adaptors.LeadListAdapter;
 import com.service.idfcmodule.databinding.FragmentDeliveryBranchListBinding;
-import com.service.idfcmodule.models.BadRequestHandle;
 import com.service.idfcmodule.models.BranchListModel;
-import com.service.idfcmodule.models.LeadModel;
 import com.service.idfcmodule.myinterface.BranchItemClicked;
-import com.service.idfcmodule.myinterface.LeadItemClicked;
 import com.service.idfcmodule.utils.ConverterUtils;
 import com.service.idfcmodule.utils.MyConstantKey;
 import com.service.idfcmodule.utils.MyErrorDialog;
@@ -46,7 +39,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -189,7 +181,7 @@ public class DeliveryBranchListFragment extends Fragment {
 
     private void getBranchList(String leadId) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().getBranchList(leadId, retailerId)
                 .enqueue(new Callback<JsonObject>() {
@@ -250,7 +242,7 @@ public class DeliveryBranchListFragment extends Fragment {
 
     private void submitBranch(String leadId, String branchId) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().submitBranch(leadId, retailerId, branchId)
                 .enqueue(new Callback<JsonObject>() {

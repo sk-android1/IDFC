@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -52,10 +51,14 @@ public class CashCalculateFragment extends Fragment {
     Activity activity;
     Context context;
 
-    int fiveHundredAmount = 0, twoHundredAmount = 0, hundredAmount = 0, fiftyAmount = 0, twentyAmount = 0, tenAmount = 0;
+    int fiveHundredAmount = 0, twoHundredAmount = 0, hundredAmount = 0, fiftyAmount = 0, twentyAmount = 0, tenAmount = 0, fiveAmount = 0;
+
+    int twentyCoinAmount = 0, tenCoinAmount = 0, fiveCoinAmount = 0, twoCoinAmount = 0, oneCoinAmount = 0;
 
     double totalAmount = 0.0;
     double deliverAmount = 0.0;
+    double totalRupees = 0.0;
+    double totalCoin = 0.0;
 
     String leadId = "";
 
@@ -108,6 +111,36 @@ public class CashCalculateFragment extends Fragment {
 
         });
 
+        binding.imgRupeesUp.setOnClickListener(view -> {
+            binding.totalRupeesLy.setVisibility(View.GONE);
+            binding.imgRupeesUp.setVisibility(View.GONE);
+            binding.imgRupeesDown.setVisibility(View.VISIBLE);
+        });
+
+        binding.imgRupeesDown.setOnClickListener(view -> {
+            binding.totalRupeesLy.setVisibility(View.VISIBLE);
+            binding.imgRupeesUp.setVisibility(View.VISIBLE);
+            binding.imgRupeesDown.setVisibility(View.GONE);
+            binding.totalCoinLy.setVisibility(View.GONE);
+            binding.imgCoinDropDown.setVisibility(View.VISIBLE);
+            binding.imgCoinDropUp.setVisibility(View.GONE);
+        });
+
+        binding.imgCoinDropUp.setOnClickListener(view -> {
+            binding.totalCoinLy.setVisibility(View.GONE);
+            binding.imgCoinDropUp.setVisibility(View.GONE);
+            binding.imgCoinDropDown.setVisibility(View.VISIBLE);
+        });
+
+        binding.imgCoinDropDown.setOnClickListener(view -> {
+            binding.totalCoinLy.setVisibility(View.VISIBLE);
+            binding.imgCoinDropUp.setVisibility(View.VISIBLE);
+            binding.imgCoinDropDown.setVisibility(View.GONE);
+            binding.totalRupeesLy.setVisibility(View.GONE);
+            binding.imgRupeesDown.setVisibility(View.VISIBLE);
+            binding.imgRupeesUp.setVisibility(View.GONE);
+        });
+
         binding.etFiveHundredCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -126,9 +159,16 @@ public class CashCalculateFragment extends Fragment {
                     fiveHundredAmount = 0;
                 }
 
-                binding.tvFiveHundredAmount.setText("₹" + fiveHundredAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹" + totalAmount);
+                binding.tvFiveHundredAmount.setText("₹ " + fiveHundredAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
 
             }
 
@@ -155,10 +195,16 @@ public class CashCalculateFragment extends Fragment {
                     twoHundredAmount = 0;
                 }
 
-                binding.tvTwoHundredAmount.setText("₹" + twoHundredAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹" + totalAmount);
+                binding.tvTwoHundredAmount.setText("₹ " + twoHundredAmount);
 
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
             }
 
             @Override
@@ -183,9 +229,16 @@ public class CashCalculateFragment extends Fragment {
                     hundredAmount = 0;
                 }
 
-                binding.tvHundredAmount.setText("₹" + hundredAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹" + totalAmount);
+                binding.tvHundredAmount.setText("₹ " + hundredAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
 
             }
 
@@ -212,9 +265,16 @@ public class CashCalculateFragment extends Fragment {
 
                 }
 
-                binding.tvFiftyAmount.setText("₹" + fiftyAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹" + totalAmount);
+                binding.tvFiftyAmount.setText("₹ " + fiftyAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
 
             }
 
@@ -240,9 +300,16 @@ public class CashCalculateFragment extends Fragment {
                     twentyAmount = 0;
                 }
 
-                binding.tvTwentyAmount.setText("₹" + twentyAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹" + totalAmount);
+                binding.tvTwentyAmount.setText("₹ " + twentyAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
 
             }
 
@@ -269,8 +336,15 @@ public class CashCalculateFragment extends Fragment {
                 }
 
                 binding.tvTenAmount.setText("₹ " + tenAmount);
-                totalAmount = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount;
-                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
 
             }
 
@@ -278,6 +352,213 @@ public class CashCalculateFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        binding.etFiveCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    int currencyCount = Integer.parseInt(s.toString());
+                    fiveAmount = currencyCount * 5;
+
+                } else {
+                    fiveAmount = 0;
+                }
+
+                binding.tvFiveAmount.setText("₹ " + fiveAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etTwentyCoinCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    int currencyCount = Integer.parseInt(s.toString());
+                    twentyCoinAmount = currencyCount * 20;
+
+                } else {
+                    twentyCoinAmount = 0;
+                }
+
+                binding.tvTwentyCoinAmount.setText("₹ " + twentyCoinAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etTenCoinCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    int currencyCount = Integer.parseInt(s.toString());
+                    tenCoinAmount = currencyCount * 10;
+
+                } else {
+                    tenCoinAmount = 0;
+                }
+
+                binding.tvTenCoinAmount.setText("₹ " + tenCoinAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+                setAmountView();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etFiveCoinCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    int currencyCount = Integer.parseInt(s.toString());
+                    fiveCoinAmount = currencyCount * 5;
+
+                } else {
+                    fiveCoinAmount = 0;
+                }
+
+                binding.tvFiveCoinAmount.setText("₹ " + fiveCoinAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+                setAmountView();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etTwoCoinCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    int currencyCount = Integer.parseInt(s.toString());
+                    twoCoinAmount = currencyCount * 2;
+
+                } else {
+                    twoCoinAmount = 0;
+                }
+
+                binding.tvTwoCoinAmount.setText("₹ " + twoCoinAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+                setAmountView();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        binding.etOneCoinCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (!s.toString().equalsIgnoreCase("")) {
+                    oneCoinAmount = Integer.parseInt(s.toString());
+
+
+                } else {
+                    oneCoinAmount = 0;
+                }
+
+                binding.tvOneCoinAmount.setText("₹ " + oneCoinAmount);
+
+//                totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+//                totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+//                totalAmount = totalRupees+totalCoin;
+//                binding.tvTotalNote.setText("₹ " + totalRupees);
+//                binding.tvTotalCoin.setText("₹ " + totalCoin);
+//                binding.tvGrandTotal.setText("₹ " + totalAmount);
+
+                setAmountView();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
 
         binding.tvSubmit.setOnClickListener(v -> {
 
@@ -294,6 +575,12 @@ public class CashCalculateFragment extends Fragment {
                     jsonObject.put("50", binding.etFiftyCount.getText().toString());
                     jsonObject.put("20", binding.etTwentyCount.getText().toString());
                     jsonObject.put("10", binding.etTenCount.getText().toString());
+                    jsonObject.put("5", binding.etFiveCount.getText().toString());
+                    jsonObject.put("20coin", binding.etTwentyCoinCount.getText().toString());
+                    jsonObject.put("10coin", binding.etTenCoinCount.getText().toString());
+                    jsonObject.put("5coin", binding.etFiveCoinCount.getText().toString());
+                    jsonObject.put("2coin", binding.etTwoCoinCount.getText().toString());
+                    jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
                     jsonObject.put("GrandTotal", totalAmount + "");
 
                     String strData = jsonObject.toString();
@@ -316,6 +603,16 @@ public class CashCalculateFragment extends Fragment {
             getRemarkList(context, activity,leadId,retailerId);
         });
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setAmountView(){
+        totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
+        totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
+        totalAmount = totalRupees+totalCoin;
+        binding.tvTotalNote.setText("₹ " + totalRupees);
+        binding.tvTotalCoin.setText("₹ " + totalCoin);
+        binding.tvGrandTotal.setText("₹ " + totalAmount);
     }
 
     @SuppressLint("SetTextI18n")
@@ -360,7 +657,7 @@ public class CashCalculateFragment extends Fragment {
 
     private void updateAmount(EditText etAmount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         String strAmt = etAmount.getText().toString().trim();
 
@@ -424,8 +721,7 @@ public class CashCalculateFragment extends Fragment {
 
     private void cashCalculateApi(String cashAmount) {
 
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
-
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().cashCalculate(leadId, retailerId,"0", cashAmount)
                 .enqueue(new Callback<JsonObject>() {
@@ -490,7 +786,7 @@ public class CashCalculateFragment extends Fragment {
     }
 
     private void closeSr(String leadId) {
-        AlertDialog pDialog = MyProgressDialog.createAlertDialog(context);
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RetrofitClient.getInstance().getApi().closeSr(leadId, retailerId)
                 .enqueue(new Callback<JsonObject>() {
