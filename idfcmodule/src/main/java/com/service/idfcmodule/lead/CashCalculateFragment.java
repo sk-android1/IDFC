@@ -741,9 +741,19 @@ public class CashCalculateFragment extends Fragment {
 //                                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
 //                                    ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
 
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                                    bundle.putString(MyConstantKey.JOB_ID, jobId);
+                                    bundle.putString(MyConstantKey.SR_NO, srNo);
+                                    bundle.putString(MyConstantKey.COUNT, "");
+                                    bundle.putString(MyConstantKey.AMOUNT, amount);
+                                    bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+
+                                    ReplaceFragmentUtils.replaceFragment(new CaseEnquiryFragment(), bundle, (AppCompatActivity) activity);
+
                                     Snackbar.make(binding.mainLayout, message, Snackbar.LENGTH_LONG).show();
 
-                                    closeSr(leadId);
+                                //    closeSr(leadId);
 
                                     pDialog.dismiss();
 

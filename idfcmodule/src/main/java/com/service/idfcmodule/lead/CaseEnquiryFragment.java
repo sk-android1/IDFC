@@ -135,13 +135,21 @@ public class CaseEnquiryFragment extends Fragment {
 
                                     String reAttempt = responseObject.getString("reattempt");
 
+
                                     if (reAttempt.equalsIgnoreCase("0")) {
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString(MyConstantKey.LEAD_ID, leadId);
-                                        bundle.putString(MyConstantKey.SR_NO, srNo);
-                                        ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
+
+                                        if (!jobSubType.equalsIgnoreCase("cash")){
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                                            bundle.putString(MyConstantKey.SR_NO, srNo);
+                                            ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
+                                        }
+                                        else {
+                                            closeSr(leadId);
+                                        }
+
                                     } else {
-                                        confirmationDialog();
+                                        confirmationDialog(message);
                                     }
 
                                     pDialog.dismiss();
@@ -185,7 +193,7 @@ public class CaseEnquiryFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void confirmationDialog() {
+    private void confirmationDialog(String errorMessage) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = LayoutInflater.from(context);
         View convertView = inflater.inflate(R.layout.case_enq_confirm_dialog, null);
@@ -231,14 +239,74 @@ public class CaseEnquiryFragment extends Fragment {
                 ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);
             //    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
             } else {
-                Toast.makeText(activity, "other jobsubtype", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString(MyConstantKey.AMOUNT, amount);
+                bundle.putString(MyConstantKey.COUNT, count);
+                bundle.putString(MyConstantKey.JOB_ID, jobId);
+                bundle.putString(MyConstantKey.SR_NO, srNo);
+                bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                bundle.putString(MyConstantKey.REATTEMPT, "1");
+                ReplaceFragmentUtils.replaceFragment(new CashCalculateFragment(), bundle, (AppCompatActivity) activity);
             }
 
         });
-        showErrorTT.setText("Documents rejected or not confirmed, Please try again or go back.");
+        showErrorTT.setText(errorMessage);
         alertDialog.setView(convertView);
         alertDialog.setCancelable(false);
         alertDialog.show();
+    }
+
+    private void closeSr(String leadId) {
+
+        AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
+
+        RetrofitClient.getInstance().getApi().closeSr(leadId, retailerId)
+                .enqueue(new Callback<JsonObject>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                        if (response.isSuccessful()) {
+                            try {
+                                JSONObject responseObject = new JSONObject(String.valueOf(response.body()));
+                                boolean status = responseObject.getBoolean("status");
+                                int statusCode = responseObject.getInt("statuscode");
+                                String message = responseObject.getString("message");
+
+                                if (statusCode == 200) {
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                                    bundle.putString(MyConstantKey.SR_NO, srNo);
+
+                                    //    ReplaceFragmentUtils.replaceFragment(new CloseSRFragment(), new Bundle(), (AppCompatActivity) activity);
+                                    ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
+
+                                    Snackbar.make(binding.mainLayout, message, Snackbar.LENGTH_LONG).show();
+
+                                    pDialog.dismiss();
+                                } else {
+                                    MyErrorDialog.nonFinishErrorDialog(context, message);
+                                    pDialog.dismiss();
+                                }
+
+                            } catch (JSONException e) {
+                                MyErrorDialog.somethingWentWrongDialog(getActivity());
+                                pDialog.dismiss();
+                            }
+                        } else {
+                            MyErrorDialog.somethingWentWrongDialog(getActivity());
+                            pDialog.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                        MyErrorDialog.somethingWentWrongDialog(getActivity());
+                        pDialog.dismiss();
+                    }
+                });
+
     }
 
 }
