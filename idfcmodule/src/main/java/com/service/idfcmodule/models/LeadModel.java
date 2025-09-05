@@ -3,6 +3,7 @@ package com.service.idfcmodule.models;
 public class LeadModel {
     String leadId, jobId,srNo, jobType, jobSubType, pickUpAddress, date, timeFrom,timeTo,count, status, amount, documentType, stage, lat, longi, mobile, branchName, branchMobile,ifscCode,delivery,dropAddress, currentDate ;
     String leadStatus;
+    String distance;
 
     public String getLeadId() {
         return leadId;
@@ -194,5 +195,13 @@ public class LeadModel {
 
     public void setLeadStatus(String leadStatus) {
         this.leadStatus = leadStatus;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent in = new Intent(MainActivity.this, IdfcMainActivity.class);
 
-            in.putExtra(MyConstantKey.RETAILER_ID, "R004002");
+            in.putExtra(MyConstantKey.RETAILER_ID, "R00109772");
             in.putExtra(MyConstantKey.PAN_NO, "BBQPT3337K");
             in.putExtra(MyConstantKey.LATITUDE, "28.9876");
             in.putExtra(MyConstantKey.LONGITUDE, "26.3596");

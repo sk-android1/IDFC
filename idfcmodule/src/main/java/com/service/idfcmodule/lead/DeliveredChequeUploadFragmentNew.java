@@ -532,12 +532,14 @@ public class DeliveredChequeUploadFragmentNew extends Fragment {
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
 
+        RequestBody rbDir = RequestBody.create(MediaType.parse("text/plain"), "lead_data");
+
         RequestBody reqFileForReceipt = RequestBody.create(MediaType.parse("image/*"), filReceiptImage);
         String fileName = filReceiptImage.getName();
         MultipartBody.Part chequeImg = MultipartBody.Part.createFormData("data", fileName, reqFileForReceipt);
 
 
-        RetrofitClient.getInstance().getApi().uploadImage( rbAgentId, chequeImg)
+        RetrofitClient.getInstance().getApi().uploadImage( rbAgentId,rbDir, chequeImg)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override

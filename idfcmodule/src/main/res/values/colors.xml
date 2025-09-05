@@ -16,6 +16,7 @@
     <color name="sky_blue">#0077AC</color>
     <color name="light_sky_blue">#C0DEED</color>
     <color name="light_sky_blue2">#F9FFFE</color>
+    <color name="light_sky_blue3">#DBEBEF</color>
     <color name="light_purple">#FBF0FD</color>
     <color name="vidcom_color">#F7B516</color>
     <color name="green">#1D9901</color>
@@ -24,6 +25,7 @@
     <color name="dark_green2">#00A84B</color>
     <color name="light_green">#EEFFF6</color>
     <color name="red">#E00000</color>
+    <color name="light_red">#FFECEC</color>
     <color name="alpha_red">#BECE0000</color>
     <color name="orange">#FB8830</color>
     <color name="yellow">#FFD500</color>

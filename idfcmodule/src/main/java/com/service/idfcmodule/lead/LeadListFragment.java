@@ -268,6 +268,7 @@ public class LeadListFragment extends Fragment {
                                 String ifsc_code = dataObject.optString("ifsc_code");
                                 String delivery = dataObject.optString("delivery");
                                 String drop_address = dataObject.optString("drop_address");
+                                String distance = dataObject.optString("distance");
 
                                 LeadModel leadModel = new LeadModel();
                                 leadModel.setLeadId(leadId);
@@ -289,6 +290,7 @@ public class LeadListFragment extends Fragment {
 
                                 leadModel.setBranchMobile(branchMobile);
                                 leadModel.setBranchName(branch_name);
+                                leadModel.setDistance(distance);
                                 leadModel.setIfscCode(ifsc_code);
                                 leadModel.setDelivery(delivery);
                                 leadModel.setDropAddress(drop_address);

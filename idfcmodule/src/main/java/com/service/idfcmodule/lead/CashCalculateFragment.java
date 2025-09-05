@@ -16,16 +16,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.service.idfcmodule.R;
+import com.service.idfcmodule.databinding.CashBottomDialogBinding;
+import com.service.idfcmodule.databinding.DynamicCounterfeitAddBinding;
 import com.service.idfcmodule.databinding.FragmentCashCalculateBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
 import com.service.idfcmodule.utils.MyConstantKey;
@@ -63,6 +68,22 @@ public class CashCalculateFragment extends Fragment {
     String leadId = "";
 
     String jobId,srNo, jobSubType, amount;
+
+    boolean isFiveHunClicked = true;
+    boolean isTwoHunClicked = true;
+    boolean isHunClicked = true;
+    boolean isFiftyClicked = true;
+    boolean isTwentyClicked = true;
+    boolean isTenClicked = true;
+    boolean isFiveClicked = true;
+
+    int fiveHunSerialNo = 1;
+    int twoHunSerialNo = 1;
+    int hunSerialNo = 1;
+    int fiftySerialNo = 1;
+    int twentySerialNo = 1;
+    int tenSerialNo = 1;
+    int fiveSerialNo = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -564,38 +585,40 @@ public class CashCalculateFragment extends Fragment {
 
             deliverAmount = Double.parseDouble(binding.tvAmount.getText().toString());
 
-            if (deliverAmount == totalAmount) {
+//            if (deliverAmount == totalAmount) {
+//
+//                JSONObject jsonObject = new JSONObject();
+//
+//                try {
+//                    jsonObject.put("500", binding.etFiveHundredCount.getText().toString());
+//                    jsonObject.put("200", binding.etTwoHundredCount.getText().toString());
+//                    jsonObject.put("100", binding.etHundredCount.getText().toString());
+//                    jsonObject.put("50", binding.etFiftyCount.getText().toString());
+//                    jsonObject.put("20", binding.etTwentyCount.getText().toString());
+//                    jsonObject.put("10", binding.etTenCount.getText().toString());
+//                    jsonObject.put("5", binding.etFiveCount.getText().toString());
+//                    jsonObject.put("20coin", binding.etTwentyCoinCount.getText().toString());
+//                    jsonObject.put("10coin", binding.etTenCoinCount.getText().toString());
+//                    jsonObject.put("5coin", binding.etFiveCoinCount.getText().toString());
+//                    jsonObject.put("2coin", binding.etTwoCoinCount.getText().toString());
+//                    jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
+//                    jsonObject.put("GrandTotal", totalAmount + "");
+//
+//                    String strData = jsonObject.toString();
 
-                JSONObject jsonObject = new JSONObject();
+                 //   cashCalculateApi(strData);
 
-                try {
-                    jsonObject.put("500", binding.etFiveHundredCount.getText().toString());
-                    jsonObject.put("200", binding.etTwoHundredCount.getText().toString());
-                    jsonObject.put("100", binding.etHundredCount.getText().toString());
-                    jsonObject.put("50", binding.etFiftyCount.getText().toString());
-                    jsonObject.put("20", binding.etTwentyCount.getText().toString());
-                    jsonObject.put("10", binding.etTenCount.getText().toString());
-                    jsonObject.put("5", binding.etFiveCount.getText().toString());
-                    jsonObject.put("20coin", binding.etTwentyCoinCount.getText().toString());
-                    jsonObject.put("10coin", binding.etTenCoinCount.getText().toString());
-                    jsonObject.put("5coin", binding.etFiveCoinCount.getText().toString());
-                    jsonObject.put("2coin", binding.etTwoCoinCount.getText().toString());
-                    jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
-                    jsonObject.put("GrandTotal", totalAmount + "");
+                    showBottomSheetDialog();
 
-                    String strData = jsonObject.toString();
-
-                    cashCalculateApi(strData);
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-            } else {
-
-                MyErrorDialog.nonFinishErrorDialog(context, "Amount mismatched");
-
-            }
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//            } else {
+//
+//                MyErrorDialog.nonFinishErrorDialog(context, "Amount mismatched");
+//
+//            }
 
         });
 
@@ -606,7 +629,7 @@ public class CashCalculateFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setAmountView(){
+    private void setAmountView() {
         totalRupees = fiveHundredAmount + twoHundredAmount + hundredAmount + fiftyAmount + twentyAmount + tenAmount+fiveAmount;
         totalCoin = twentyCoinAmount+tenCoinAmount+fiveCoinAmount+twoCoinAmount+oneCoinAmount;
         totalAmount = totalRupees+totalCoin;
@@ -838,6 +861,250 @@ public class CashCalculateFragment extends Fragment {
                         pDialog.dismiss();
                     }
                 });
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showBottomSheetDialog() {
+
+
+        CashBottomDialogBinding bottomDialogBinding = CashBottomDialogBinding.inflate(getLayoutInflater());
+
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        bottomSheetDialog.setContentView(bottomDialogBinding.getRoot());
+
+        String fiveHunCount = binding.etFiveHundredCount.getText().toString();
+        String twoHunCount = binding.etTwoHundredCount.getText().toString();
+        String hunCount = binding.etHundredCount.getText().toString();
+        String fiftyCount = binding.etFiftyCount.getText().toString();
+        String twentyCount = binding.etTwentyCount.getText().toString();
+        String tenCount = binding.etTenCount.getText().toString();
+        String fiveCount = binding.etFiveCount.getText().toString();
+
+        bottomDialogBinding.tvFiveHunCount.setText(fiveHunCount);
+        bottomDialogBinding.tvTwoHunRupeesCount.setText(twoHunCount);
+        bottomDialogBinding.tvHunCount.setText(hunCount);
+        bottomDialogBinding.tvFiftyCount.setText(fiftyCount);
+        bottomDialogBinding.tvTwentyCount.setText(twentyCount);
+        bottomDialogBinding.tvTenCount.setText(tenCount);
+        bottomDialogBinding.tvFiveCount.setText(fiveCount);
+
+        bottomDialogBinding.tvFiveHunRupees.setText("₹"+fiveHundredAmount);
+        bottomDialogBinding.tvTwoHunRupees.setText("₹"+twoHundredAmount);
+        bottomDialogBinding.tvHundred.setText("₹"+hundredAmount);
+        bottomDialogBinding.tvFifty.setText("₹"+fiftyAmount);
+        bottomDialogBinding.tvTwenty.setText("₹"+twentyAmount);
+        bottomDialogBinding.tvten.setText("₹"+tenAmount);
+        bottomDialogBinding.tvFive.setText("₹"+fiveAmount);
+
+        bottomDialogBinding.btnNo.setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+        });
+
+        bottomDialogBinding.btnYes.setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+            binding.cashMainLy.setVisibility(View.GONE);
+            binding.counterfeitMainLy.setVisibility(View.VISIBLE);
+
+        });
+
+        binding.fiveHunCounterfietDropDown.setOnClickListener(view -> {
+            binding.fiveHunCounterfietDropDown.setVisibility(View.GONE);
+            binding.fiveHunCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.fiveHunCounterFietAddLy.setVisibility(View.VISIBLE);
+
+
+            if (isFiveHunClicked){
+                createDynamicLy(binding.fiveHunCounterfietLy, String.valueOf(fiveHunSerialNo), false);
+                isFiveHunClicked = false;
+            }
+
+
+
+        });
+        binding.fiveHunCounterfietDropUp.setOnClickListener(view -> {
+            binding.fiveHunCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.fiveHunCounterfietDropUp.setVisibility(View.GONE);
+            binding.fiveHunCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.twoHunCounterfietDropDown.setOnClickListener(view -> {
+            binding.twoHunCounterfietDropDown.setVisibility(View.GONE);
+            binding.twoHunCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.twoHunCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if(isTwoHunClicked){
+                createDynamicLy(binding.twoHunCounterfietLy,String.valueOf(twoHunSerialNo),false);
+                isTwoHunClicked = false;
+            }
+
+
+        });
+        binding.twoHunCounterfietDropUp.setOnClickListener(view -> {
+            binding.twoHunCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.twoHunCounterfietDropUp.setVisibility(View.GONE);
+            binding.twoHunCounterFietAddLy.setVisibility(View.GONE);
+
+        });
+
+        binding.hundredCounterfietDropDown.setOnClickListener(view -> {
+            binding.hundredCounterfietDropDown.setVisibility(View.GONE);
+            binding.hundredCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.hunCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if (isHunClicked){
+                createDynamicLy(binding.hunCounterfietLy,String.valueOf(hunSerialNo),false);
+                isHunClicked = false;
+            }
+
+        });
+        binding.hundredCounterfietDropUp.setOnClickListener(view -> {
+            binding.hundredCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.hundredCounterfietDropUp.setVisibility(View.GONE);
+            binding.hunCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.fiftyCounterfietDropDown.setOnClickListener(view -> {
+            binding.fiftyCounterfietDropDown.setVisibility(View.GONE);
+            binding.fiftyCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.fiftyCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if (isFiftyClicked){
+            createDynamicLy(binding.fiftyCounterfietLy,String.valueOf(fiftySerialNo),false);
+            isFiftyClicked = false;
+            }
+        });
+        binding.fiftyCounterfietDropUp.setOnClickListener(view -> {
+            binding.fiftyCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.fiftyCounterfietDropUp.setVisibility(View.GONE);
+            binding.fiftyCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.twentyCounterfietDropDown.setOnClickListener(view -> {
+            binding.twentyCounterfietDropDown.setVisibility(View.GONE);
+            binding.twentyCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.twentyCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if (isTwentyClicked){
+                createDynamicLy(binding.twentyCounterfietLy,String.valueOf(twentySerialNo),false);
+                isTwentyClicked = false;
+            }
+
+        });
+        binding.twentyCounterfietDropUp.setOnClickListener(view -> {
+            binding.twentyCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.twentyCounterfietDropUp.setVisibility(View.GONE);
+            binding.twentyCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.tenCounterfietDropDown.setOnClickListener(view -> {
+            binding.tenCounterfietDropDown.setVisibility(View.GONE);
+            binding.tenCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.tenCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if (isTenClicked){
+                createDynamicLy(binding.tenCounterfietLy,String.valueOf(tenSerialNo),false);
+                isTenClicked = false;
+             }
+
+
+        });
+        binding.tenCounterfietDropUp.setOnClickListener(view -> {
+            binding.tenCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.tenCounterfietDropUp.setVisibility(View.GONE);
+            binding.tenCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.fiveCounterfietDropDown.setOnClickListener(view -> {
+            binding.fiveCounterfietDropDown.setVisibility(View.GONE);
+            binding.fiveCounterfietDropUp.setVisibility(View.VISIBLE);
+            binding.fiveCounterFietAddLy.setVisibility(View.VISIBLE);
+
+            if (isFiveClicked){
+                createDynamicLy(binding.fiveCounterfeitLy,String.valueOf(fiveSerialNo),false);
+                isFiveClicked = false;
+            }
+
+
+        });
+        binding.fiveCounterfietDropUp.setOnClickListener(view -> {
+            binding.fiveCounterfietDropDown.setVisibility(View.VISIBLE);
+            binding.fiveCounterfietDropUp.setVisibility(View.GONE);
+            binding.fiveCounterFietAddLy.setVisibility(View.GONE);
+        });
+
+        binding.fiveHunCounterAddClick.setOnClickListener(view -> {
+            fiveHunSerialNo++;
+            createDynamicLy(binding.fiveHunCounterfietLy,String.valueOf(fiveHunSerialNo),true);
+        });
+        binding.twoHunCounterAddClick.setOnClickListener(view -> {
+            twoHunSerialNo++;
+            createDynamicLy(binding.twoHunCounterfietLy,String.valueOf(twoHunSerialNo),true);
+        });
+        binding.hunCounterAddClick.setOnClickListener(view -> {
+            hunSerialNo++;
+            createDynamicLy(binding.hunCounterfietLy,String.valueOf(hunSerialNo),true);
+        });
+        binding.fiftyCounterAddClick.setOnClickListener(view -> {
+            fiftySerialNo++;
+            createDynamicLy(binding.fiftyCounterfietLy,String.valueOf(fiftySerialNo),true);
+        });
+        binding.twentyCounterAddClick.setOnClickListener(view -> {
+            twentySerialNo++;
+            createDynamicLy(binding.twentyCounterfietLy,String.valueOf(twentySerialNo),true);
+        });
+        binding.tenCounterAddClick.setOnClickListener(view -> {
+            tenSerialNo++;
+            createDynamicLy(binding.tenCounterfietLy,String.valueOf(tenSerialNo),true);
+        });
+        binding.fiveCounterAddClick.setOnClickListener(view -> {
+            fiveSerialNo++;
+            createDynamicLy(binding.fiveCounterfeitLy,String.valueOf(fiveSerialNo),true);
+        });
+
+
+        bottomSheetDialog.show();
+    }
+
+    private void createDynamicLy(LinearLayout dynamicLy, String sNo, boolean isCloseVisible) {
+        DynamicCounterfeitAddBinding dynamicCounterfeitAddBinding = DynamicCounterfeitAddBinding.inflate(getLayoutInflater());
+        dynamicLy.addView(dynamicCounterfeitAddBinding.getRoot());
+
+        dynamicCounterfeitAddBinding.etSNo.setText(sNo);
+
+        if (isCloseVisible) {
+            dynamicCounterfeitAddBinding.imgRemove.setVisibility(View.VISIBLE);
+        }
+
+        dynamicCounterfeitAddBinding.imgRemove.setOnClickListener(view -> {
+            dynamicLy.removeView(dynamicCounterfeitAddBinding.getRoot());
+        });
+
+        dynamicCounterfeitAddBinding.etCurrencyNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0){
+                    dynamicCounterfeitAddBinding.imgRemove.setVisibility(View.GONE);
+                }
+                else {
+                    if (isCloseVisible) {
+                        dynamicCounterfeitAddBinding.imgRemove.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+
+
+            }
+        });
 
     }
 

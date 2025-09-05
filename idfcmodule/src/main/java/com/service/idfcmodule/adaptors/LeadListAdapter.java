@@ -83,6 +83,7 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         String mobile = arrayList.get(position).getMobile();
         String branchMobile = arrayList.get(position).getBranchMobile();
         String branchName = arrayList.get(position).getBranchName();
+        String distance = arrayList.get(position).getDistance();
         String ifscCode = arrayList.get(position).getIfscCode();
         String delivery = arrayList.get(position).getDelivery();
         String dropAddress = arrayList.get(position).getDropAddress();
@@ -148,6 +149,7 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         holder.binding.tvDateTime.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
         holder.binding.tvDateTime2.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
         holder.binding.tvDateTime3.setText( timeFrom + " to " + timeTo );
+        holder.binding.tvBranch.setText(branchName+"\n"+distance);
 
         if (selectedItemPosition != null && selectedItemPosition == position) {
             holder.binding.layout2.setVisibility(View.VISIBLE);

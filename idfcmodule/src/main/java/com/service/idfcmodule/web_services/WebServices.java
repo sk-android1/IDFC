@@ -125,6 +125,7 @@ public interface WebServices {
     @POST("retailer/upload")
     Call<JsonObject> uploadImage(
             @Part("agent_id") RequestBody agent_id,
+            @Part("dir") RequestBody dir,
             @Part() MultipartBody.Part uploadImages
 
     );

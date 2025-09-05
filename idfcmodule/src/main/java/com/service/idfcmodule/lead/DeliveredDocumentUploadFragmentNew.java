@@ -294,11 +294,12 @@ public class DeliveredDocumentUploadFragmentNew extends Fragment {
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
+        RequestBody rbDir = RequestBody.create(MediaType.parse("text/plain"), "lead_data");
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         RequestBody reqFileForReceipt = RequestBody.create(MediaType.parse("image/*"), filReceiptImage);
         MultipartBody.Part chequeImg = MultipartBody.Part.createFormData("data", timeStamp + filReceiptImage.getName(), reqFileForReceipt);
 
-        RetrofitClient.getInstance().getApi().uploadImage(rbAgentId, chequeImg)
+        RetrofitClient.getInstance().getApi().uploadImage(rbAgentId,rbDir, chequeImg)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
