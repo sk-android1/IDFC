@@ -179,7 +179,7 @@ public class PickupTrackingFragment extends Fragment {
 //            intent.setData(Uri.parse("tel:" + mobile));
 //            startActivity(intent);
 
-            callLogApi();
+            callLog();
         });
 
         binding.locationLy.setOnClickListener(view -> {
@@ -335,7 +335,7 @@ public class PickupTrackingFragment extends Fragment {
 
     }
 
-    private void callLogApi() {
+    private void callLog() {
 
         AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
         pd.show();
