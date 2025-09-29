@@ -211,6 +211,8 @@ public class LeadListFragment extends Fragment {
                                 String amount = dataObject.optString("amount");
                                 String documentType = dataObject.optString("document_type");
                                 String stage = dataObject.optString("stage");
+                                String mobileNo = dataObject.optString("mobile");
+
 
                                 JSONObject pickUpObj = dataObject.getJSONObject("pickup");
                                 String pickupAddress = pickUpObj.optString("address");
@@ -228,8 +230,8 @@ public class LeadListFragment extends Fragment {
                                      longi = latLongArr[1];
                                 }
 
-                            //    String address = pickupAddress + ", " + pickupCity + "\n" + pickupState + "(" + pickupPincode + ")";
-                                String address =   "xxxxxxxxxxxxx, " + pickupCity + "\n" + pickupState + "(" + pickupPincode + ")";
+                                String address = pickupAddress + ", " + pickupCity + "\n" + pickupState + "(" + pickupPincode + ")";
+                              //  String address =   "xxxxxxxxxxxxx, " + pickupCity + "\n" + pickupState + "(" + pickupPincode + ")";
 
                                 String date = dataObject.optString("date_of_visit");
                                 String timeFrom = dataObject.optString("time_of_visit_from");
@@ -258,7 +260,6 @@ public class LeadListFragment extends Fragment {
                                 }
 
                                 Date c = Calendar.getInstance().getTime();
-                                System.out.println("Current time => " + c);
 
                                 SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                                 String currentDate = df.format(c);
@@ -269,6 +270,7 @@ public class LeadListFragment extends Fragment {
                                 String delivery = dataObject.optString("delivery");
                                 String drop_address = dataObject.optString("drop_address");
                                 String distance = dataObject.optString("distance");
+                                String timer = dataObject.optString("timer");
 
                                 LeadModel leadModel = new LeadModel();
                                 leadModel.setLeadId(leadId);
@@ -297,6 +299,8 @@ public class LeadListFragment extends Fragment {
 
                                 leadModel.setCurrentDate(currentDate);
                                 leadModel.setLeadStatus(status);
+                                leadModel.setTimer(timer);
+                                leadModel.setMobile(mobileNo);
 
                                 leadList.add(leadModel);
 

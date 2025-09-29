@@ -70,7 +70,7 @@ public class CaseEnquiryFragment extends Fragment {
 
         binding = FragmentCaseEnquiryBinding.inflate(inflater);
 
-        if (comType.equalsIgnoreCase("Vidcom")){
+        if (comType.equalsIgnoreCase("Vidcom")) {
             ImageViewCompat.setImageTintList(binding.leadTopLy.imgBack, ColorStateList.valueOf(getResources().getColor(R.color.vidcom_color)));
             binding.imgEnquiry.setImageResource(R.drawable.enquiry2);
         }
@@ -135,17 +135,16 @@ public class CaseEnquiryFragment extends Fragment {
 
                                     String reAttempt = responseObject.getString("reattempt");
 
-
                                     if (reAttempt.equalsIgnoreCase("0")) {
 
-                                        if (!jobSubType.equalsIgnoreCase("cash")){
+                                        if (!jobSubType.equalsIgnoreCase("cash")) {
                                             Bundle bundle = new Bundle();
                                             bundle.putString(MyConstantKey.LEAD_ID, leadId);
                                             bundle.putString(MyConstantKey.SR_NO, srNo);
                                             ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
-                                        }
-                                        else {
-                                            closeSr(leadId);
+                                        } else {
+                                         //   closeSr(leadId);
+                                            ReplaceFragmentUtils.replaceFragment(new CloseSRFragment(), new Bundle(), (AppCompatActivity) activity);
                                         }
 
                                     } else {
@@ -194,6 +193,7 @@ public class CaseEnquiryFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void confirmationDialog(String errorMessage) {
+
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         LayoutInflater inflater = LayoutInflater.from(context);
         View convertView = inflater.inflate(R.layout.case_enq_confirm_dialog, null);
@@ -210,7 +210,7 @@ public class CaseEnquiryFragment extends Fragment {
             okayBtn.setText("OK");
         }
 
-        ivClose.setOnClickListener(v->{
+        ivClose.setOnClickListener(v -> {
             alertDialog.dismiss();
         });
 
@@ -225,8 +225,8 @@ public class CaseEnquiryFragment extends Fragment {
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                 bundle.putString(MyConstantKey.REATTEMPT, "1");
-             //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
-              //  ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+                //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+                //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
                 ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
             } else if (jobSubType.equalsIgnoreCase("document")) {
                 Bundle bundle = new Bundle();
@@ -237,7 +237,7 @@ public class CaseEnquiryFragment extends Fragment {
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                 bundle.putString(MyConstantKey.REATTEMPT, "1");
                 ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);
-            //    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+                //    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.AMOUNT, amount);
@@ -255,6 +255,7 @@ public class CaseEnquiryFragment extends Fragment {
         alertDialog.setView(convertView);
         alertDialog.setCancelable(false);
         alertDialog.show();
+
     }
 
     private void closeSr(String leadId) {
@@ -274,13 +275,20 @@ public class CaseEnquiryFragment extends Fragment {
                                 String message = responseObject.getString("message");
 
                                 if (statusCode == 200) {
+                                    JSONObject dataObj = responseObject.getJSONObject("data");
+                                    String timer = dataObj.optString("timer");
 
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
-                                    bundle.putString(MyConstantKey.SR_NO, srNo);
+                                    if (!jobSubType.equalsIgnoreCase("cash")) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                                        bundle.putString(MyConstantKey.SR_NO, srNo);
+                                        bundle.putString(MyConstantKey.TIMER, timer);
+                                        bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
 
-                                    //    ReplaceFragmentUtils.replaceFragment(new CloseSRFragment(), new Bundle(), (AppCompatActivity) activity);
-                                    ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
+                                        ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
+                                    } else {
+                                        ReplaceFragmentUtils.replaceFragment(new CloseSRFragment(), new Bundle(), (AppCompatActivity) activity);
+                                    }
 
                                     Snackbar.make(binding.mainLayout, message, Snackbar.LENGTH_LONG).show();
 

@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/leadTopLy"
         android:src="@drawable/googlemap"
         android:scaleType="fitXY"
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:background="@drawable/rounded_back"
         android:paddingTop="@dimen/_10dp"
         android:paddingBottom="@dimen/_15dp"
-        android:layout_marginTop="-50dp"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
@@ -48,6 +48,7 @@
             android:background="@drawable/border_edit2"
             android:orientation="horizontal"
             android:layout_marginHorizontal="@dimen/_10dp"
+            android:layout_marginTop="10dp"
             >
             <EditText
                 android:layout_weight="1"

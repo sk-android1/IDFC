@@ -30,7 +30,7 @@
                 android:id="@+id/imgDropdown"
                 android:layout_width="@dimen/_25dp"
                 android:layout_height="@dimen/_25dp"
-                android:layout_gravity="center_vertical"
+
                 android:src="@drawable/dropdown" />
 
             <LinearLayout
@@ -336,11 +336,22 @@
             android:visibility="gone"
             tools:visibility="visible">
 
+            <ImageView
+                android:id="@+id/imgMap"
+                android:layout_width="@dimen/_35dp"
+                android:layout_height="@dimen/_35dp"
+                android:layout_marginHorizontal="@dimen/_5dp"
+                android:src="@drawable/gmap"
+                android:gravity="center"
+                android:visibility="visible"
+                tools:visibility="visible"
+                />
+
             <TextView
                 android:id="@+id/tvAccept"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_green_back"
                 android:fontFamily="@font/montserrat_regular"
@@ -363,6 +374,18 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:textColor="@color/alpha_black"/>
+            <ImageView
+
+                android:id="@+id/imgCall"
+                android:layout_width="@dimen/_35dp"
+                android:layout_height="@dimen/_35dp"
+                android:layout_marginHorizontal="@dimen/_5dp"
+                android:src="@drawable/call"
+                android:gravity="center"
+                android:visibility="visible"
+                tools:visibility="visible"
+                android:padding="5dp"
+                android:tint="@color/sky_blue"/>
         </LinearLayout>
 
         <TextView

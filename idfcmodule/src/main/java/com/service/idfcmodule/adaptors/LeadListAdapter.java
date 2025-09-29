@@ -5,6 +5,8 @@ import static com.service.idfcmodule.IdfcMainActivity.comType;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.service.idfcmodule.models.LeadModel;
 import com.service.idfcmodule.myinterface.LeadItemClicked;
 import com.service.idfcmodule.utils.ConverterUtils;
 import com.service.idfcmodule.utils.MyConstantKey;
+import com.service.idfcmodule.utils.NetworkUtils;
 import com.service.idfcmodule.utils.ReplaceFragmentUtils;
 
 import java.util.ArrayList;
@@ -94,6 +97,7 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         String longi = arrayList.get(position).getLongi();
 
         String currentDate = arrayList.get(position).getCurrentDate();
+        String timer = arrayList.get(position).getTimer();
 
 //        if (currentDate.equalsIgnoreCase(date)) {                        // for restrict allocate lead
 //            holder.binding.imgDropdown.setVisibility(View.VISIBLE);
@@ -112,7 +116,7 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
             holder.binding.tvStatus.setText("Pending");
         } else if (status.equalsIgnoreCase("1")) {
             holder.binding.tvProceed.setVisibility(View.VISIBLE);
-         //   holder.binding.tvCancelReq.setVisibility(View.VISIBLE);
+            //   holder.binding.tvCancelReq.setVisibility(View.VISIBLE);
             holder.binding.tvStatus.setText("Allocated");
             if (!stage.equalsIgnoreCase("0")) {
                 holder.binding.imgDropdown.setVisibility(View.GONE);
@@ -123,6 +127,8 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
             holder.binding.tvStatus.setText("Completed");
             holder.binding.tvStatus.setBackgroundResource(R.drawable.rounded_green_back);
             holder.binding.imgDropdown.setVisibility(View.GONE);
+            holder.binding.layout1.setClickable(false);
+            holder.binding.layout1.setEnabled(false);
         }
 
         if (jobSubType.equalsIgnoreCase("cash")) {
@@ -137,19 +143,19 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         }
 
         String[] convertedDateArray = date.split(" ");
-      //  String convertedDate = convertedDateArray[1] + " " + convertedDateArray[0];
-        String convertedDate = convertedDateArray[0]+" " + convertedDateArray[1]+" " + convertedDateArray[2];
+        //  String convertedDate = convertedDateArray[1] + " " + convertedDateArray[0];
+        String convertedDate = convertedDateArray[0] + " " + convertedDateArray[1] + " " + convertedDateArray[2];
 
-        holder.binding.tvJobId.setText("SR - "+srNo);
-        holder.binding.tvJobId2.setText("SR - "+srNo);
+        holder.binding.tvJobId.setText("SR - " + srNo);
+        holder.binding.tvJobId2.setText("SR - " + srNo);
         holder.binding.tvJobType.setText(ConverterUtils.capitaliseString(jobSubType) + " " + ConverterUtils.capitaliseString(jobType));
         holder.binding.tvJobType2.setText(ConverterUtils.capitaliseString(jobSubType) + " " + ConverterUtils.capitaliseString(jobType));
         holder.binding.tvAddress.setText(address);
         holder.binding.tvAddress2.setText(address);
         holder.binding.tvDateTime.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
         holder.binding.tvDateTime2.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
-        holder.binding.tvDateTime3.setText( timeFrom + " to " + timeTo );
-        holder.binding.tvBranch.setText(branchName+"\n"+distance);
+        holder.binding.tvDateTime3.setText(timeFrom + " to " + timeTo);
+        holder.binding.tvBranch.setText(branchName + "\n" + distance);
 
         if (selectedItemPosition != null && selectedItemPosition == position) {
             holder.binding.layout2.setVisibility(View.VISIBLE);
@@ -184,9 +190,9 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                     bundle.putString(MyConstantKey.LEAD_ID, leadId);
                     bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                     bundle.putString(MyConstantKey.REATTEMPT, "0");
-                //    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
-                 //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
-                    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
+                    //    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+                    //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+                    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
 
                 } else if (jobSubType.equalsIgnoreCase("cash")) {
                     Bundle bundle = new Bundle();
@@ -205,13 +211,13 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                     bundle.putString(MyConstantKey.LEAD_ID, leadId);
                     bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                     bundle.putString(MyConstantKey.REATTEMPT, "0");
-                    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
-                 //   ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
+                    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);
+                    //   ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
 
-                 //   Toast.makeText(context, "it is not job subtype cheque or cash", Toast.LENGTH_SHORT).show();
+                    //   Toast.makeText(context, "it is not job subtype cheque or cash", Toast.LENGTH_SHORT).show();
                 }
 
-            }else if (stage.equalsIgnoreCase("3")){
+            } else if (stage.equalsIgnoreCase("3")) {
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.COUNT, count);
                 bundle.putString(MyConstantKey.AMOUNT, amount);
@@ -219,15 +225,15 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                 bundle.putString(MyConstantKey.SR_NO, srNo);
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
-                ReplaceFragmentUtils.replaceFragment(new CaseEnquiryFragment(), bundle, (AppCompatActivity) activity);  // direct  go to Delivered Document Upload Fragment
+                bundle.putString(MyConstantKey.TIMER, timer);
+                ReplaceFragmentUtils.replaceFragment(new CaseEnquiryFragment(), bundle, (AppCompatActivity) activity);
 
             } else if (stage.equalsIgnoreCase("4")) {
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
                 ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
-            }
-            else if (stage.equalsIgnoreCase("5")) {
+            } else if (stage.equalsIgnoreCase("5")) {
 
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.MOBILE_NO, branchMobile);
@@ -241,12 +247,13 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
                 ReplaceFragmentUtils.replaceFragment(new DeliveryTrackingFragment(), bundle, (AppCompatActivity) activity);
-            }
-            else if (stage.equalsIgnoreCase("6")) {
+            } else if (stage.equalsIgnoreCase("6")) {
 
                 Bundle bundle = new Bundle();
+                bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
+                bundle.putString(MyConstantKey.TIMER, timer);
 
                 ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
             }
@@ -292,7 +299,17 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         });
 
         holder.binding.tvCancelReq.setOnClickListener(v -> {
-            recyclerViewItemClicked.onItemClicked("cancelRequest",leadId,"","","");
+            recyclerViewItemClicked.onItemClicked("cancelRequest", leadId, "", "", "");
+        });
+
+        holder.binding.imgCall.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + mobile));
+            context.startActivity(intent);
+        });
+
+        holder.binding.imgMap.setOnClickListener(view -> {
+            NetworkUtils.addressToMap(address, context);
         });
 
     }

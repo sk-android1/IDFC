@@ -585,40 +585,38 @@ public class CashCalculateFragment extends Fragment {
 
             deliverAmount = Double.parseDouble(binding.tvAmount.getText().toString());
 
-//            if (deliverAmount == totalAmount) {
-//
-//                JSONObject jsonObject = new JSONObject();
-//
-//                try {
-//                    jsonObject.put("500", binding.etFiveHundredCount.getText().toString());
-//                    jsonObject.put("200", binding.etTwoHundredCount.getText().toString());
-//                    jsonObject.put("100", binding.etHundredCount.getText().toString());
-//                    jsonObject.put("50", binding.etFiftyCount.getText().toString());
-//                    jsonObject.put("20", binding.etTwentyCount.getText().toString());
-//                    jsonObject.put("10", binding.etTenCount.getText().toString());
-//                    jsonObject.put("5", binding.etFiveCount.getText().toString());
-//                    jsonObject.put("20coin", binding.etTwentyCoinCount.getText().toString());
-//                    jsonObject.put("10coin", binding.etTenCoinCount.getText().toString());
-//                    jsonObject.put("5coin", binding.etFiveCoinCount.getText().toString());
-//                    jsonObject.put("2coin", binding.etTwoCoinCount.getText().toString());
-//                    jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
-//                    jsonObject.put("GrandTotal", totalAmount + "");
-//
-//                    String strData = jsonObject.toString();
+            if (deliverAmount == totalAmount) {
 
-                 //   cashCalculateApi(strData);
+                JSONObject jsonObject = new JSONObject();
 
-                    showBottomSheetDialog();
+                try {
+                    jsonObject.put("500", binding.etFiveHundredCount.getText().toString());
+                    jsonObject.put("200", binding.etTwoHundredCount.getText().toString());
+                    jsonObject.put("100", binding.etHundredCount.getText().toString());
+                    jsonObject.put("50", binding.etFiftyCount.getText().toString());
+                    jsonObject.put("20", binding.etTwentyCount.getText().toString());
+                    jsonObject.put("10", binding.etTenCount.getText().toString());
+                    jsonObject.put("5", binding.etFiveCount.getText().toString());
+                    jsonObject.put("20coin", binding.etTwentyCoinCount.getText().toString());
+                    jsonObject.put("10coin", binding.etTenCoinCount.getText().toString());
+                    jsonObject.put("5coin", binding.etFiveCoinCount.getText().toString());
+                    jsonObject.put("2coin", binding.etTwoCoinCount.getText().toString());
+                    jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
+                    jsonObject.put("GrandTotal", totalAmount + "");
 
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//            } else {
-//
-//                MyErrorDialog.nonFinishErrorDialog(context, "Amount mismatched");
-//
-//            }
+                    String strData = jsonObject.toString();
+
+                    cashCalculateApi(strData);
+
+                  //  showBottomSheetDialog();
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            } else {
+                MyErrorDialog.nonFinishErrorDialog(context, "Amount mismatched");
+            }
 
         });
 
@@ -919,9 +917,8 @@ public class CashCalculateFragment extends Fragment {
                 isFiveHunClicked = false;
             }
 
-
-
         });
+
         binding.fiveHunCounterfietDropUp.setOnClickListener(view -> {
             binding.fiveHunCounterfietDropDown.setVisibility(View.VISIBLE);
             binding.fiveHunCounterfietDropUp.setVisibility(View.GONE);
@@ -940,6 +937,7 @@ public class CashCalculateFragment extends Fragment {
 
 
         });
+
         binding.twoHunCounterfietDropUp.setOnClickListener(view -> {
             binding.twoHunCounterfietDropDown.setVisibility(View.VISIBLE);
             binding.twoHunCounterfietDropUp.setVisibility(View.GONE);
@@ -958,6 +956,7 @@ public class CashCalculateFragment extends Fragment {
             }
 
         });
+
         binding.hundredCounterfietDropUp.setOnClickListener(view -> {
             binding.hundredCounterfietDropDown.setVisibility(View.VISIBLE);
             binding.hundredCounterfietDropUp.setVisibility(View.GONE);
@@ -974,6 +973,7 @@ public class CashCalculateFragment extends Fragment {
             isFiftyClicked = false;
             }
         });
+
         binding.fiftyCounterfietDropUp.setOnClickListener(view -> {
             binding.fiftyCounterfietDropDown.setVisibility(View.VISIBLE);
             binding.fiftyCounterfietDropUp.setVisibility(View.GONE);
@@ -1100,8 +1100,6 @@ public class CashCalculateFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
-
 
             }
         });

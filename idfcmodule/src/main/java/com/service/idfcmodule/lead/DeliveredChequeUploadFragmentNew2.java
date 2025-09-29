@@ -173,20 +173,26 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
         binding.tvSubmit.setOnClickListener(v -> {
 
-            if (intCount < 6)
-            {
+            if (intCount < 6) {
                 submitDocument();
             }
             else {
                 submitDocumentWithoutChqDetails();
             }
 
-
         });
 
         binding.imgPlus.setOnClickListener(view -> {
+
             plusClicked++;
-            createDynamicLayout(plusClicked);
+
+            if (plusClicked < intCount){
+                createDynamicLayout(plusClicked);
+            }
+            else {
+                MyErrorDialog.nonFinishErrorDialog(context, "Please update the count to add more images.");
+            }
+
         });
 
         binding.tvCancelReq.setOnClickListener(view -> {
@@ -205,7 +211,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
         binding1.tvNumbering.setText((number + 1) + "");
         binding1.tvUploadImage.setText("Upload Cheque " + (number + 1));
 
-        if (intCount >5){
+        if (intCount > 5) {
             binding1.tvBrowse.setBackgroundResource(R.drawable.rounded_green_back);
             binding1.tvBrowse.setClickable(true);
             binding1.tvBrowse.setEnabled(true);
@@ -223,7 +229,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
         binding1.layout2.setOnClickListener(view -> {
 
-            if (intCount < 6){
+            if (intCount < 6) {
                 binding1.layout1.setVisibility(View.VISIBLE);
                 binding1.imgDropdown.setVisibility(View.INVISIBLE);
                 binding1.imgDropUp.setVisibility(View.VISIBLE);
@@ -369,7 +375,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
     private boolean checkInput(DynamicLayoutBinding binding) {
 
-        if (intCount < 6){
+        if (intCount < 6) {
             if (!TextUtils.isEmpty(binding.etBankName.getText().toString())) {
                 if (!TextUtils.isEmpty(binding.etChequeNo.getText().toString())) {
                     if (!TextUtils.isEmpty(binding.etChequeAmount.getText().toString())) {
@@ -479,9 +485,10 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
                 binding2.layout1.setVisibility(View.GONE);
 
-                if (intCount < 6){
+                if (intCount < 6) {
                     binding2.imgDropdown.setVisibility(View.VISIBLE);
                 }
+
                 binding2.imgDropUp.setVisibility(View.GONE);
 
                 bankName = binding2.etBankName.getText().toString();
@@ -570,7 +577,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
                                     try {
 
                                         JSONObject chq_obj = new JSONObject();
-                                        if (intCount >5){
+                                        if (intCount > 5) {
                                             chq_obj.put("image", chequeImg);
                                             chq_obj.put("image_name", fileName);
                                         }
@@ -590,6 +597,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
                                     Snackbar.make(binding.mainLayout, message, Snackbar.LENGTH_LONG).show();
                                     pDialog.dismiss();
+
                                 } else {
                                     MyErrorDialog.nonFinishErrorDialog(context, message);
                                     pDialog.dismiss();
@@ -713,13 +721,11 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-
         RequestBody rbAgentId = RequestBody.create(MediaType.parse("text/plain"), retailerId);
         RequestBody rbLeadId = RequestBody.create(MediaType.parse("text/plain"), leadId);
         RequestBody rbReattempt = RequestBody.create(MediaType.parse("text/plain"), reAttempt);
         RequestBody rbCount = RequestBody.create(MediaType.parse("text/plain"), count);
         RequestBody rbAmount = RequestBody.create(MediaType.parse("text/plain"), amount);
-
 
         RetrofitClient.getInstance().getApi().uploadDeliveredCheque(rbLeadId, rbAgentId, rbReattempt, rbCount, rbAmount, uploadImagesArr)
                 .enqueue(new Callback<JsonObject>() {
@@ -948,11 +954,11 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
         }
 
     }
-    private void submitDocumentWithoutChqDetails(){
+
+    private void submitDocumentWithoutChqDetails() {
         count = binding.tvCount.getText().toString();
         intCount = Integer.parseInt(count);
         uploadImagesArr = new MultipartBody.Part[intCount];
-
 
         boolean isAllFileSelected = true;
 
@@ -966,7 +972,6 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
                     RequestBody devicePhotoBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), String.valueOf(jsonObject));
 
                     MultipartBody.Part imagePart = MultipartBody.Part.createFormData("data[]", null, devicePhotoBody);
-
 
                     uploadImagesArr[i] = imagePart;
 
@@ -982,7 +987,6 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
             if (isAllFileSelected) {
 
                 uploadDeliveredDocument(leadId, "");
-
 
             } else {
                 Toast.makeText(activity, "Please upload all Cheque", Toast.LENGTH_SHORT).show();
@@ -1005,7 +1009,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
 
         intCount = Integer.parseInt(strCount);
 
-       if (intCount <6){
+       if (intCount <6) {
            for (int i = 0; i < intCount; i++) {
 
                createDynamicLayout(i);
@@ -1019,7 +1023,7 @@ public class DeliveredChequeUploadFragmentNew2 extends Fragment {
         binding.tvCount.setText(strCount);
         ConverterUtils.clearJSONArray(imgJsonArray);
 
-        if (intCount > 5){
+        if (intCount > 5) {
             binding.imgPlus.setVisibility(View.VISIBLE);
         }
         else {

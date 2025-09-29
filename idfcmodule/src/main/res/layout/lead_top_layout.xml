@@ -36,7 +36,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="15dp"
         android:background="@drawable/rounded_back"
-        android:elevation="5dp">
+        android:elevation="5dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

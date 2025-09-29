@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.service.idfcmodule.R;
 
-
 public class MyProgressDialog {
 
     public static AlertDialog createAlertDialogDsb(Context context) {
@@ -29,7 +28,7 @@ public class MyProgressDialog {
 
         Glide.with(gifView)
                 .asGif()
-                .load(R.drawable.loding2) // your GIF file in res/drawable
+                .load(R.drawable.loding2)
                 .into(gifView);
 
         pDialog.show();

@@ -69,8 +69,12 @@ public class MyScannerNew extends AppCompatActivity {
             codeScanner.startPreview();
         });
 
-        binding.tvCancel.setOnClickListener(v -> {
+        binding.leadTopLy.imgBack.setOnClickListener(v -> {
             finish();
+        });
+
+        binding.tvCancel.setOnClickListener(v -> {
+            activity.finish();
         });
 
     }

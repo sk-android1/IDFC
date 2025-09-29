@@ -39,5 +39,13 @@
     <string name="job_type">Job Type</string>
     <string name="job_id">Job ID</string>
     <string name="search_name_user_id">Search Name/User ID</string>
+    <string name="timer_text">
+    Please wait for the timer to end to upload the deposit slip. Please try to close the SR by communicating with the branch officer.\n
+    To upload a deposit slip, please follow the steps mentioned below:\n\n
+    1. Click on \'Upload Deposit Slip\'.\n
+    2. Capture a clear image of the deposit slip such that all details are clearly visible.\n
+    3. Click on \'Submit\' button to mark the deposit slip as submitted.\n\n
+    Once the deposit slip is submitted, you can leave the bank premises.
+</string>
 
 </resources>

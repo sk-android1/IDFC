@@ -25,6 +25,7 @@ import com.service.idfcmodule.utils.ConverterUtils;
 import com.service.idfcmodule.utils.MyConstantKey;
 import com.service.idfcmodule.utils.MyErrorDialog;
 import com.service.idfcmodule.utils.MyProgressDialog;
+import com.service.idfcmodule.utils.NetworkUtils;
 import com.service.idfcmodule.utils.ReplaceFragmentUtils;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
@@ -110,6 +111,10 @@ public class DeliveryTrackingFragment extends Fragment {
             startActivity(intent);
         });
 
+        binding.locationLy.setOnClickListener(view -> {
+            NetworkUtils.addressToMap(dropAddress, context);
+        });
+
         binding.tvCloseSr.setOnClickListener(v -> {
             closeSr(leadId);
         });
@@ -134,11 +139,16 @@ public class DeliveryTrackingFragment extends Fragment {
 
                                 if (statusCode == 200) {
 
+                                    JSONObject dataObj = responseObject.getJSONObject("data");
+
+                                    String timer = dataObj.optString("timer");
+
                                     Bundle bundle = new Bundle();
+                                    bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                                     bundle.putString(MyConstantKey.LEAD_ID, leadId);
                                     bundle.putString(MyConstantKey.SR_NO, srNo);
+                                    bundle.putString(MyConstantKey.TIMER, timer);
 
-                                    //    ReplaceFragmentUtils.replaceFragment(new CloseSRFragment(), new Bundle(), (AppCompatActivity) activity);
                                     ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
 
                                     Snackbar.make(binding.mainLayout, message, Snackbar.LENGTH_LONG).show();

@@ -110,6 +110,13 @@ public interface WebServices {
     @GET
     Call<JsonObject> verifyUserByUrl(@Url String url);
 
+
+    @FormUrlEncoded
+    @POST("retailer/call-log")
+    Call<JsonObject> callLog(
+            @Field("lead_id") String lead_id
+    );
+
     @Multipart
     @POST("retailer/upload-data")
     Call<JsonObject> uploadDeliveredDocument(
@@ -236,6 +243,14 @@ public interface WebServices {
     Call<JsonObject> closeSrEnq(
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id
+    );
+
+    @FormUrlEncoded
+    @POST("retailer/upload-receipt" )
+    Call<JsonObject> uploadReceipt(
+            @Field("lead_id") String lead_id,
+            @Field("agent_id") String agent_id,
+            @Field("receipt") String receipt
     );
 
 }

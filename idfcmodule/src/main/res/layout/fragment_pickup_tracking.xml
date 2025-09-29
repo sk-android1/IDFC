@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/lead_main_bg"
     tools:context=".lead.PickupTrackingFragment">
 
     <include
@@ -19,9 +20,11 @@
         android:layout_height="200dp"
         android:scaleType="fitXY"
         android:src="@drawable/googlemap"
-        app:layout_constraintTop_toBottomOf="@+id/leadTopLy" />
+        app:layout_constraintTop_toBottomOf="@+id/leadTopLy"
+        android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/deliveryCartLy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="13dp"
@@ -53,7 +56,8 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgMap">
+        app:layout_constraintTop_toBottomOf="@+id/deliveryCartLy"
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +74,8 @@
                 android:fontFamily="@font/montserrat_semibold"
                 android:text="Pickup Tracking"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"

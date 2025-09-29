@@ -175,9 +175,11 @@ public class PickupTrackingFragment extends Fragment {
         });
 
         binding.imgCall.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:" + mobile));
-            startActivity(intent);
+//            Intent intent = new Intent(Intent.ACTION_DIAL);
+//            intent.setData(Uri.parse("tel:" + mobile));
+//            startActivity(intent);
+
+            callLogApi();
         });
 
         binding.locationLy.setOnClickListener(view -> {
@@ -215,8 +217,6 @@ public class PickupTrackingFragment extends Fragment {
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
         String geoCode = latitude+","+longitude;
-
-      //  Toast.makeText(context, geoCode + "\n" +address, Toast.LENGTH_SHORT).show();
 
         RetrofitClient.getInstance().getApi().reachedLocation(leadId, retailerId, geoCode,address)
                 .enqueue(new Callback<JsonObject>() {
@@ -332,6 +332,58 @@ public class PickupTrackingFragment extends Fragment {
         alertDialog.setView(convertView);
 
         alertDialog.show();
+
+    }
+
+    private void callLogApi() {
+
+        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
+        pd.show();
+
+        RetrofitClient.getInstance().getApi().callLog(leadId).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+
+                if (response.isSuccessful()) {
+
+                    try {
+                        JSONObject responseObject = new JSONObject(String.valueOf(response.body()));
+
+                        int statusCode = responseObject.getInt("statuscode");
+                        String message = responseObject.getString("message");
+
+                        if (statusCode == 200) {
+
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:" + mobile));
+                            startActivity(intent);
+
+                            pd.dismiss();
+
+                        } else {
+                            pd.dismiss();
+                            MyErrorDialog.nonFinishErrorDialog(context, message);
+                        }
+
+                    } catch (JSONException e) {
+                        pd.dismiss();
+                        MyErrorDialog.nonFinishErrorDialog(context, "Something went wrong");
+                    }
+
+                } else {
+                    pd.dismiss();
+                    MyErrorDialog.nonFinishErrorDialog(context, "Something went wrong");
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                pd.dismiss();
+                MyErrorDialog.nonFinishErrorDialog(context, "Something went wrong");
+
+            }
+        });
 
     }
 

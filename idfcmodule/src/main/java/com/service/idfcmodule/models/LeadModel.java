@@ -4,6 +4,7 @@ public class LeadModel {
     String leadId, jobId,srNo, jobType, jobSubType, pickUpAddress, date, timeFrom,timeTo,count, status, amount, documentType, stage, lat, longi, mobile, branchName, branchMobile,ifscCode,delivery,dropAddress, currentDate ;
     String leadStatus;
     String distance;
+    String timer;
 
     public String getLeadId() {
         return leadId;
@@ -203,5 +204,13 @@ public class LeadModel {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public String getTimer() {
+        return timer;
+    }
+
+    public void setTimer(String timer) {
+        this.timer = timer;
     }
 }

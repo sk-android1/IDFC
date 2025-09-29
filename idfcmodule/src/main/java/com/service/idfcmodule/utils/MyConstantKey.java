@@ -41,6 +41,7 @@ public class MyConstantKey {
     public static String AMOUNT = "amount";
     public static String COUNT = "count";
     public static String REATTEMPT = "reAttempt";
+    public static String TIMER = "timer";
 
     public static String FULL_NAME = "fullName";
     public static String AADHAR_NO = "adharNo";
