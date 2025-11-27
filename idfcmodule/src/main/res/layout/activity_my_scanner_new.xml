@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/mainLayout"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:text="Look into Camera and Hold Still"
                 android:textSize="14sp"
-
                 android:fontFamily="@font/montserrat_regular"
                 android:gravity="center"/>
 

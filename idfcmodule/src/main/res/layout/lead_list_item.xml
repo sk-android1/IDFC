@@ -220,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/montserrat_semibold"
-                    android:text="Pickup time slot"
+                    android:text="Created Time"
                     android:textSize="13sp"
                     android:textColor="@color/dark_grey_idfc"/>
 
@@ -234,6 +234,34 @@
                     android:textAlignment="textEnd"
                     android:textSize="13sp"
                     android:textColor="@color/dark_grey_idfc"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:text="Pickup Time Slot"
+                    android:textSize="13sp"
+                    android:textColor="@color/dark_grey_idfc"/>
+
+                <TextView
+                    android:id="@+id/tvPickupTimeSlot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="22 Aug 2024 2:00 PM"
+                    android:textAlignment="textEnd"
+                    android:textSize="13sp"
+                    android:textColor="@color/dark_grey_idfc"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -385,7 +413,7 @@
                 android:visibility="visible"
                 tools:visibility="visible"
                 android:padding="5dp"
-                android:tint="@color/sky_blue"/>
+                app:tint="@color/sky_blue"/>
         </LinearLayout>
 
         <TextView

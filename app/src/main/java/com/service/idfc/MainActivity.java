@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             in.putExtra(MyConstantKey.APP_TYPE, "Retailer");        // Partner or Retailer
             in.putExtra(MyConstantKey.COM_TYPE, "Relipay");      // pass Vidcom or Relipay
             in.putExtra(MyConstantKey.LOGIN_TYPE, "APP");      // pass APP, RelipaySDK,RelipayPartnerSDK, VidcomSDK  for provider
+            in.putExtra(MyConstantKey.RELIPAY_APP_VERSION, "7.1.7");
 
             resultLauncher.launch(in);
 
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             in.putExtra(MyConstantKey.APP_TYPE, "Retailer");        // Partner or Retailer
             in.putExtra(MyConstantKey.COM_TYPE, "Relipay");             // pass Vidcom or Relipay
             in.putExtra(MyConstantKey.LOGIN_TYPE, "APP");      // pass APP, RelipaySDK,RelipayPartnerSDK, VidcomSDK  for provider
+            in.putExtra(MyConstantKey.RELIPAY_APP_VERSION, "7.1.7");
 
             resultLauncher.launch(in);
 
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             in.putExtra(MyConstantKey.APP_TYPE, "Retailer");        // Partner or Retailer
             in.putExtra(MyConstantKey.COM_TYPE, "Relipay");             // pass Vidcom or Relipay
             in.putExtra(MyConstantKey.LOGIN_TYPE, "APP");      // pass APP, RelipaySDK,RelipayPartnerSDK, VidcomSDK  for provider
+            in.putExtra(MyConstantKey.RELIPAY_APP_VERSION, "7.1.7");
 
             resultLauncher.launch(in);
 
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             in.putExtra(MyConstantKey.APP_TYPE, "Retailer");        // Partner or Retailer
             in.putExtra(MyConstantKey.COM_TYPE, "Relipay");             // pass Vidcom or Relipay
             in.putExtra(MyConstantKey.LOGIN_TYPE, "APP");      // pass APP, RelipaySDK,RelipayPartnerSDK, VidcomSDK  for provider
+            in.putExtra(MyConstantKey.RELIPAY_APP_VERSION, "7.1.7");
 
             resultLauncher.launch(in);
 

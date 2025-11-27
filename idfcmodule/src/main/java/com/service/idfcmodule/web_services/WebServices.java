@@ -11,6 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface WebServices {
@@ -21,7 +22,7 @@ public interface WebServices {
             @Field("asm_id") String asm_id,
             @Field("bank_id") String bank_id,
             @Field("agents") String agents
-            );
+    );
 
     @FormUrlEncoded
     @POST("asm/agent-list")
@@ -61,7 +62,8 @@ public interface WebServices {
     @FormUrlEncoded
     @POST("retailer/remark-list")
     Call<JsonObject> getRemark(
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @Multipart
@@ -91,20 +93,23 @@ public interface WebServices {
             @Field("bank_id") String bank_id,
             @Field("agent_id") String agent_id,
             @Field("status") String status
+
     );
 
     @FormUrlEncoded
     @POST("retailer/allocate-lead")
     Call<JsonObject> allocatedLead(
             @Field("lead_id") String lead_id,
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
     @POST("retailer/start-journey")
     Call<JsonObject> startJourney(
             @Field("lead_id") String lead_id,
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @GET
@@ -114,7 +119,15 @@ public interface WebServices {
     @FormUrlEncoded
     @POST("retailer/call-log")
     Call<JsonObject> callLog(
-            @Field("lead_id") String lead_id
+            @Field("lead_id") String lead_id,
+            @Field("agent_id") String agent_id
+    );
+
+    @FormUrlEncoded
+    @POST("retailer/version")
+    Call<JsonObject> saveAppVersion(
+            @Field("app_version") String app_version,
+            @Field("agent_id") String agent_id
     );
 
     @Multipart
@@ -124,6 +137,7 @@ public interface WebServices {
             @Part("agent_id") RequestBody agent_id,
             @Part("reattempt") RequestBody reattempt,
             @Part("count") RequestBody count,
+            @Part("geo_code") RequestBody geoCode,
             @Part MultipartBody.Part[] uploadImagesArr
 
     );
@@ -133,6 +147,7 @@ public interface WebServices {
     Call<JsonObject> uploadImage(
             @Part("agent_id") RequestBody agent_id,
             @Part("dir") RequestBody dir,
+            @Part("geo_code") RequestBody geoCode,
             @Part() MultipartBody.Part uploadImages
 
     );
@@ -145,6 +160,7 @@ public interface WebServices {
             @Part("reattempt") RequestBody reattempt,
             @Part("count") RequestBody count,
             @Part("amount") RequestBody amount,
+            @Part("geo_code") RequestBody geoCode,
             @Part MultipartBody.Part[] uploadImagesArr
 
     );
@@ -155,7 +171,8 @@ public interface WebServices {
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
             @Field("reattempt") String reattempt,
-            @Field("data") String data
+            @Field("data") String data,
+             @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -170,14 +187,16 @@ public interface WebServices {
     Call<JsonObject> submitBranch(
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
-            @Field("branch_id") String branch_id
+            @Field("branch_id") String branch_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
     @POST("retailer/close-sr")
     Call<JsonObject> closeSr(
             @Field("lead_id") String lead_id,
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -186,8 +205,9 @@ public interface WebServices {
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
             @Field("count") String count,
-          //  @Field("amount") String amount,
-            @Field("job_subtype") String job_subtype
+            //  @Field("amount") String amount,
+            @Field("job_subtype") String job_subtype,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -196,7 +216,8 @@ public interface WebServices {
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
             @Field("amount") String amount,
-            @Field("job_subtype") String job_subtype
+            @Field("job_subtype") String job_subtype,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -205,7 +226,8 @@ public interface WebServices {
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
             @Field("count") String count,
-            @Field("job_subtype") String job_subtype
+            @Field("job_subtype") String job_subtype,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -218,10 +240,19 @@ public interface WebServices {
     );
 
     @FormUrlEncoded
+    @POST("retailer/retry-sms")
+    Call<JsonObject> retrySms(
+            @Field("lead_id") String lead_id,
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
+    );
+
+    @FormUrlEncoded
     @POST("retailer/case-enquire")
     Call<JsonObject> caseEnquiry(
             @Field("lead_id") String lead_id,
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
@@ -229,28 +260,32 @@ public interface WebServices {
     Call<JsonObject> cancelRequest(
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
-            @Field("remark") String remark
+            @Field("remark") String remark,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
     @POST("retailer/bank-list")
     Call<JsonObject> bankList(
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
     @POST("retailer/close-sr-enquire")
     Call<JsonObject> closeSrEnq(
             @Field("lead_id") String lead_id,
-            @Field("agent_id") String agent_id
+            @Field("agent_id") String agent_id,
+            @Field("geo_code") String geo_code
     );
 
     @FormUrlEncoded
-    @POST("retailer/upload-receipt" )
+    @POST("retailer/upload-receipt")
     Call<JsonObject> uploadReceipt(
             @Field("lead_id") String lead_id,
             @Field("agent_id") String agent_id,
-            @Field("receipt") String receipt
+            @Field("receipt") String receipt,
+            @Field("geo_code") String geo_code
     );
 
 }

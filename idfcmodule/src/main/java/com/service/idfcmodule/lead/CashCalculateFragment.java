@@ -1,30 +1,55 @@
 package com.service.idfcmodule.lead;
 
+import static android.os.Looper.getMainLooper;
 import static com.service.idfcmodule.IdfcMainActivity.retailerId;
 import static com.service.idfcmodule.utils.CancelRequest.getRemarkList;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -33,9 +58,12 @@ import com.service.idfcmodule.databinding.CashBottomDialogBinding;
 import com.service.idfcmodule.databinding.DynamicCounterfeitAddBinding;
 import com.service.idfcmodule.databinding.FragmentCashCalculateBinding;
 import com.service.idfcmodule.models.BadRequestHandle;
+import com.service.idfcmodule.utils.AddressFetcherService;
+import com.service.idfcmodule.utils.GPSTracker;
 import com.service.idfcmodule.utils.MyConstantKey;
 import com.service.idfcmodule.utils.MyErrorDialog;
 import com.service.idfcmodule.utils.MyProgressDialog;
+import com.service.idfcmodule.utils.NetworkUtils;
 import com.service.idfcmodule.utils.ReplaceFragmentUtils;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
@@ -50,6 +78,8 @@ import retrofit2.Response;
 
 
 public class CashCalculateFragment extends Fragment {
+
+    String networkStatus = "";
 
     FragmentCashCalculateBinding binding;
 
@@ -67,7 +97,7 @@ public class CashCalculateFragment extends Fragment {
 
     String leadId = "";
 
-    String jobId,srNo, jobSubType, amount;
+    String jobId,srNo, jobSubType, amount,customerName = "";
 
     boolean isFiveHunClicked = true;
     boolean isTwoHunClicked = true;
@@ -84,6 +114,18 @@ public class CashCalculateFragment extends Fragment {
     int twentySerialNo = 1;
     int tenSerialNo = 1;
     int fiveSerialNo = 1;
+
+    // for location
+    private Location currentLocation;
+    private final int LOCATION_PERMISSION = 101;
+    String latitude = "", longitude = "", address = "", pinCode = "";
+    boolean isButtonClicked = false;
+    ///////////////
+
+    String whichButtonClicked = "";
+    String strJsonAmount = "";
+
+    String reAttempt = "0";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,10 +151,15 @@ public class CashCalculateFragment extends Fragment {
             leadId = getArguments().getString(MyConstantKey.LEAD_ID,"");
             amount = getArguments().getString(MyConstantKey.AMOUNT,"");
             jobSubType = getArguments().getString(MyConstantKey.JOB_SUBTYPE,"");
+            customerName = getArguments().getString(MyConstantKey.CUSTOMER_NAME,"");
+
+            reAttempt = getArguments().getString(MyConstantKey.REATTEMPT, "0");
         }
 
         binding.tvJobId.setText("SR - "+srNo);
         binding.tvAmount.setText(amount);
+
+        networkStatus = NetworkUtils.getConnectivityStatusString(context);
 
         clickEvents();
 
@@ -604,9 +651,18 @@ public class CashCalculateFragment extends Fragment {
                     jsonObject.put("1coin", binding.etOneCoinCount.getText().toString());
                     jsonObject.put("GrandTotal", totalAmount + "");
 
-                    String strData = jsonObject.toString();
+                     strJsonAmount = jsonObject.toString();
 
-                    cashCalculateApi(strData);
+                    whichButtonClicked = "submit";
+
+                    if (networkStatus.equalsIgnoreCase("Connected")) {
+
+                        checkPermissionAndGetLocation();
+
+                    } else {
+                        MyErrorDialog.nonFinishErrorDialog(context, networkStatus);
+                    }
+
 
                   //  showBottomSheetDialog();
 
@@ -621,7 +677,16 @@ public class CashCalculateFragment extends Fragment {
         });
 
         binding.tvCancelReq.setOnClickListener(view -> {
-            getRemarkList(context, activity,leadId,retailerId);
+
+            whichButtonClicked = "cancelRequest";
+
+            if (networkStatus.equalsIgnoreCase("Connected")) {
+                checkPermissionAndGetLocation();
+            } else {
+                MyErrorDialog.nonFinishErrorDialog(context, networkStatus);
+            }
+
+
         });
 
     }
@@ -682,7 +747,9 @@ public class CashCalculateFragment extends Fragment {
 
         String strAmt = etAmount.getText().toString().trim();
 
-        RetrofitClient.getInstance().getApi().updateAmount(leadId, retailerId, strAmt, jobSubType)
+        String geoCode = latitude + "," + longitude;
+
+        RetrofitClient.getInstance().getApi().updateAmount(leadId, retailerId, strAmt, jobSubType,geoCode)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -744,7 +811,9 @@ public class CashCalculateFragment extends Fragment {
 
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-        RetrofitClient.getInstance().getApi().cashCalculate(leadId, retailerId,"0", cashAmount)
+        String geoCode = latitude+","+longitude;
+
+        RetrofitClient.getInstance().getApi().cashCalculate(leadId, retailerId,reAttempt, cashAmount,geoCode)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -769,6 +838,7 @@ public class CashCalculateFragment extends Fragment {
                                     bundle.putString(MyConstantKey.COUNT, "");
                                     bundle.putString(MyConstantKey.AMOUNT, amount);
                                     bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                                    bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
 
                                     ReplaceFragmentUtils.replaceFragment(new CaseEnquiryFragment(), bundle, (AppCompatActivity) activity);
 
@@ -819,7 +889,9 @@ public class CashCalculateFragment extends Fragment {
     private void closeSr(String leadId) {
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-        RetrofitClient.getInstance().getApi().closeSr(leadId, retailerId)
+        String geoCode = latitude+","+longitude;
+
+        RetrofitClient.getInstance().getApi().closeSr(leadId, retailerId,geoCode)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -935,7 +1007,6 @@ public class CashCalculateFragment extends Fragment {
                 isTwoHunClicked = false;
             }
 
-
         });
 
         binding.twoHunCounterfietDropUp.setOnClickListener(view -> {
@@ -950,7 +1021,7 @@ public class CashCalculateFragment extends Fragment {
             binding.hundredCounterfietDropUp.setVisibility(View.VISIBLE);
             binding.hunCounterFietAddLy.setVisibility(View.VISIBLE);
 
-            if (isHunClicked){
+            if (isHunClicked) {
                 createDynamicLy(binding.hunCounterfietLy,String.valueOf(hunSerialNo),false);
                 isHunClicked = false;
             }
@@ -1006,8 +1077,6 @@ public class CashCalculateFragment extends Fragment {
                 createDynamicLy(binding.tenCounterfietLy,String.valueOf(tenSerialNo),false);
                 isTenClicked = false;
              }
-
-
         });
         binding.tenCounterfietDropUp.setOnClickListener(view -> {
             binding.tenCounterfietDropDown.setVisibility(View.VISIBLE);
@@ -1105,5 +1174,207 @@ public class CashCalculateFragment extends Fragment {
         });
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        if (networkStatus.equalsIgnoreCase("Connected")) {
+//            checkPermissionAndGetLocation();
+//        }
+//        else {
+//            MyErrorDialog.activityFinishErrorDialog(context, activity, networkStatus);
+//        }
+
+    }
+
+    ///////////  for location
+
+    public void checkPermissionAndGetLocation() {
+
+        if (checkLocationPermission()) {
+            getLocationLatLang();
+        }
+        else {
+            Snackbar.make(binding.mainLayout, "Please allow location permission", Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    public void startGettingLocation() {
+        FusedLocationProviderClient locationProviderClient = LocationServices.getFusedLocationProviderClient(context);
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        LocationCallback locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(@NonNull LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Log.i("TAG", "Location result is available");
+            }
+
+            @Override
+            public void onLocationAvailability(@NonNull LocationAvailability locationAvailability) {
+                super.onLocationAvailability(locationAvailability);
+                if (locationAvailability.isLocationAvailable()) {
+                    Log.i("TAG", "Location is available");
+                } else {
+                    Log.i("TAG", "Location is unavailable");
+                }
+            }
+        };
+
+        if (checkLocationPermission()) {
+            locationProviderClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());
+            locationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onSuccess(Location location) {
+                    currentLocation = location;
+                    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+                    Log.d("TAG", "onSuccess: " + currentLocation);
+                    getAddress();
+                }
+            });
+
+            locationProviderClient.getLastLocation().addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i("tag", e.getMessage());
+                }
+            });
+
+        }
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION);
+            return false;
+        } else {
+            //    getLocationLatLang();
+            return true;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == LOCATION_PERMISSION) {
+            for (int grantRes : grantResults) {
+                if (grantRes == PackageManager.PERMISSION_DENIED) {
+                    checkLocationPermission();
+                    return;
+                }
+            }
+
+            getLocationLatLang();
+        }
+    }
+
+    public void getLocationLatLang() {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        GPSTracker gps = new GPSTracker(context);
+        if (isGPSEnabled) {
+            if (gps.canGetLocation()) {
+                latitude = String.valueOf(gps.getLatitude());
+                longitude = String.valueOf(gps.getLongitude());
+
+                if (latitude.equalsIgnoreCase("") || longitude.equalsIgnoreCase("") || latitude.equalsIgnoreCase("0.0") || longitude.equalsIgnoreCase("0.0")) {
+                    checkPermissionAndGetLocation();
+                } else {
+                    if (whichButtonClicked.equalsIgnoreCase("submit")){
+                        cashCalculateApi(strJsonAmount);
+                    }  else if (whichButtonClicked.equalsIgnoreCase("cancelRequest")) {
+                        getRemarkList(context, activity,leadId,retailerId,latitude,longitude);
+                    }
+                    else{
+                        Snackbar.make(binding.mainLayout, "Other button clicked", Snackbar.LENGTH_LONG).show();
+                    }
+
+                }
+
+            }
+        }
+        else {
+            OnGPS();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void OnGPS() {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        View convertView = getLayoutInflater().inflate(R.layout.dsb_device_not_connected, null);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        alertDialog.setCancelable(false);
+        alertDialog.setView(convertView);
+
+        alertDialog.show();
+
+        TextView tag_line = convertView.findViewById(R.id.tag_line);
+        TextView device_name = convertView.findViewById(R.id.device_name);
+        Button done_btn = convertView.findViewById(R.id.done_btn);
+        ImageView image_set = convertView.findViewById(R.id.image_set);
+
+        ImageView image_close = convertView.findViewById(R.id.close);
+
+        image_close.setOnClickListener(view -> {
+            alertDialog.dismiss();
+        });
+
+        image_set.setOnClickListener(view -> {
+            alertDialog.dismiss();
+        });
+
+        tag_line.setText("Location Sharing is Off!");
+        device_name.setText("You need to turn your location sharing on");
+        done_btn.setText("Turn Location On");
+        done_btn.setOnClickListener(v -> {
+            alertDialog.dismiss();
+            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        });
+
+    }
+
+    private void getAddress() {
+        if (!Geocoder.isPresent()) {
+            Toast.makeText(context, "GeoCoder Not Found", Toast.LENGTH_SHORT).show();
+        } else {
+            startAddressFetcherService();
+        }
+    }
+
+    private void startAddressFetcherService() {
+        Intent intent = new Intent(context, AddressFetcherService.class);
+        CashCalculateFragment.AddressResultReceiver addressResultReceiver = new CashCalculateFragment.AddressResultReceiver(new Handler());
+        intent.putExtra(MyConstantKey.RECEIVER, addressResultReceiver);
+        intent.putExtra(MyConstantKey.LOCATION_DATA_EXTRA, currentLocation);
+        context.startService(intent);
+    }
+
+    private class AddressResultReceiver extends ResultReceiver {
+
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if (resultCode == 0) {
+                address = resultData.getString(MyConstantKey.RESULT_DATA_KEY);
+                pinCode = resultData.getString(MyConstantKey.PINCODE);
+            }
+
+        }
+
+    }
+
+    ////////////////////////////////
+
 
 }

@@ -5,6 +5,9 @@ public class LeadModel {
     String leadStatus;
     String distance;
     String timer;
+    String createdAt;
+    String qrVerify;
+    String customerName;
 
     public String getLeadId() {
         return leadId;
@@ -212,5 +215,29 @@ public class LeadModel {
 
     public void setTimer(String timer) {
         this.timer = timer;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getQrVerify() {
+        return qrVerify;
+    }
+
+    public void setQrVerify(String qrVerify) {
+        this.qrVerify = qrVerify;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

@@ -57,6 +57,7 @@ public class IdfcMainActivity extends AppCompatActivity {
     public static String latitude = "";
     public static String longitude = "";
     public static String loginType = "";
+    public static String appVersion = "";
 
     String networkStatus = "";
 
@@ -116,6 +117,7 @@ public class IdfcMainActivity extends AppCompatActivity {
         latitude = getIntent().getStringExtra(MyConstantKey.LATITUDE);
         longitude = getIntent().getStringExtra(MyConstantKey.LONGITUDE);
         loginType = getIntent().getStringExtra(MyConstantKey.LOGIN_TYPE);
+        appVersion = getIntent().getStringExtra(MyConstantKey.RELIPAY_APP_VERSION);
 
     }
 

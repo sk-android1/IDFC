@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.lead.BankListFragment;
 import com.service.idfcmodule.models.BadRequestHandle;
+import com.service.idfcmodule.myinterface.LocationListener;
 import com.service.idfcmodule.web_services.RetrofitClient;
 
 import org.json.JSONArray;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,10 +45,12 @@ import retrofit2.Response;
 public class CancelRequest {
 
     @SuppressLint("SetTextI18n")
-    public static void getRemarkList(Context context,Activity activity, String leadId, String retailerId) {
+    public static void getRemarkList(Context context,Activity activity, String leadId, String retailerId,String lat, String longi) {
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-        RetrofitClient.getInstance().getApi().getRemark(retailerId).enqueue(new Callback<JsonObject>() {
+        String geoCode = lat+","+longi;
+
+        RetrofitClient.getInstance().getApi().getRemark(retailerId,geoCode).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 if (response.isSuccessful()) {
@@ -65,7 +70,7 @@ public class CancelRequest {
                                 remarkList.add(proofType);
                             }
 
-                          showConfirmDialog(context, activity,leadId,retailerId,remarkList );
+                          showConfirmDialog(context, activity,leadId,retailerId,remarkList,lat,longi);
                             pDialog.dismiss();
 
                         } else {
@@ -91,12 +96,12 @@ public class CancelRequest {
         });
 
     }
-    private static void showConfirmDialog(Context context, Activity activity,String leadId, String retailerId, ArrayList<String> remarkList) {
+    private static void showConfirmDialog(Context context, Activity activity,String leadId, String retailerId, ArrayList<String> remarkList,String lat, String longi) {
 
         androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(context).create();
         LayoutInflater inflater = LayoutInflater.from(context);
         View convertView = inflater.inflate(R.layout.cancel_req_dialog, null);
-        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.rounded_back);
+        Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawableResource(R.drawable.rounded_back);
 
         LinearLayout selectLy = convertView.findViewById(R.id.selectRemarkLy);
         LinearLayout remarkLy = convertView.findViewById(R.id.remarkLy);
@@ -112,7 +117,9 @@ public class CancelRequest {
 //        remarkList.add("Customer gave invalid documents/cheque");
 //        remarkList.add("Customer asked to reschedule");
 //
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, remarkList);
+     //   ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, remarkList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, R.layout.remarks_item,R.id.tv_item, remarkList);
+        autoTv.setDropDownWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         autoTv.setAdapter(adapter);
         selectLy.setOnClickListener(view -> {
             autoTv.showDropDown();
@@ -159,7 +166,7 @@ public class CancelRequest {
 
             if (!TextUtils.isEmpty(autoTv.getText().toString())) {
                 String remark = autoTv.getText().toString();
-                cancelRequest(context, activity, leadId, retailerId,remark);
+                cancelRequest(context, activity, leadId, retailerId,remark,lat,longi);
                 alertDialog.dismiss();
             } else {
                 etRemark.setError("Required");
@@ -177,11 +184,13 @@ public class CancelRequest {
         alertDialog.show();
     }
 
-    private static void cancelRequest(Context context, Activity activity, String leadId, String retailerId, String remark) {
+    private static void cancelRequest(Context context, Activity activity, String leadId, String retailerId, String remark,String lat, String longi) {
 
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-        RetrofitClient.getInstance().getApi().cancelRequest(leadId, retailerId,remark)
+        String geoCode = lat+","+longi;
+
+        RetrofitClient.getInstance().getApi().cancelRequest(leadId, retailerId,remark,geoCode)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -235,6 +244,5 @@ public class CancelRequest {
                 });
 
     }
-
 
 }

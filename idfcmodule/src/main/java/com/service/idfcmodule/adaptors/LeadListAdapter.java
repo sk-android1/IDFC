@@ -31,6 +31,7 @@ import com.service.idfcmodule.lead.DeliveredDocumentUploadFragment;
 import com.service.idfcmodule.lead.DeliveredDocumentUploadFragmentNew;
 import com.service.idfcmodule.lead.DeliveryBranchListFragment;
 import com.service.idfcmodule.lead.DeliveryTrackingFragment;
+import com.service.idfcmodule.lead.PickupTrackingFragment;
 import com.service.idfcmodule.models.LeadModel;
 import com.service.idfcmodule.myinterface.LeadItemClicked;
 import com.service.idfcmodule.utils.ConverterUtils;
@@ -99,6 +100,12 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         String currentDate = arrayList.get(position).getCurrentDate();
         String timer = arrayList.get(position).getTimer();
 
+        String createdAt = arrayList.get(position).getCreatedAt();
+
+
+        String qrVerify = arrayList.get(position).getQrVerify();
+        String customerName = arrayList.get(position).getCustomerName();
+
 //        if (currentDate.equalsIgnoreCase(date)) {                        // for restrict allocate lead
 //            holder.binding.imgDropdown.setVisibility(View.VISIBLE);
 //        }
@@ -154,7 +161,8 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         holder.binding.tvAddress2.setText(address);
         holder.binding.tvDateTime.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
         holder.binding.tvDateTime2.setText(convertedDate + "\n" + timeFrom + " to " + timeTo);
-        holder.binding.tvDateTime3.setText(timeFrom + " to " + timeTo);
+        holder.binding.tvDateTime3.setText(createdAt);
+        holder.binding.tvPickupTimeSlot.setText(timeFrom + " to " + timeTo);
         holder.binding.tvBranch.setText(branchName + "\n" + distance);
 
         if (selectedItemPosition != null && selectedItemPosition == position) {
@@ -178,44 +186,78 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                 holder.binding.layout2.setVisibility(View.VISIBLE);
                 holder.binding.layout1.setVisibility(View.GONE);
             } else if (stage.equalsIgnoreCase("1")) {                              // direct  go to pickup tracking fragment
-                recyclerViewItemClicked.onItemClicked("proceedToJourney", leadId, stage, amount, count);
+                recyclerViewItemClicked.onItemClicked("proceedToJourney", leadId, stage, amount, count,qrVerify);
             } else if (stage.equalsIgnoreCase("2")) {
 
-                if (jobSubType.equalsIgnoreCase("cheque")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(MyConstantKey.COUNT, count);
-                    bundle.putString(MyConstantKey.AMOUNT, amount);
-                    bundle.putString(MyConstantKey.JOB_ID, jobId);
-                    bundle.putString(MyConstantKey.SR_NO, srNo);
-                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
-                    bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
-                    bundle.putString(MyConstantKey.REATTEMPT, "0");
-                    //    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
-                    //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
-                    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
+              if (qrVerify.equalsIgnoreCase("1")) {
 
-                } else if (jobSubType.equalsIgnoreCase("cash")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(MyConstantKey.AMOUNT, amount);
-                    bundle.putString(MyConstantKey.JOB_ID, jobId);
-                    bundle.putString(MyConstantKey.SR_NO, srNo);
-                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
-                    bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
-                    bundle.putString(MyConstantKey.REATTEMPT, "0");
-                    ReplaceFragmentUtils.replaceFragment(new CashCalculateFragment(), bundle, (AppCompatActivity) activity);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(MyConstantKey.COUNT, count);
-                    bundle.putString(MyConstantKey.JOB_ID, jobId);
-                    bundle.putString(MyConstantKey.SR_NO, srNo);
-                    bundle.putString(MyConstantKey.LEAD_ID, leadId);
-                    bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
-                    bundle.putString(MyConstantKey.REATTEMPT, "0");
-                    ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);
-                    //   ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+                  if (jobSubType.equalsIgnoreCase("cheque")) {
 
-                    //   Toast.makeText(context, "it is not job subtype cheque or cash", Toast.LENGTH_SHORT).show();
-                }
+                      Bundle bundle = new Bundle();
+                      bundle.putString(MyConstantKey.COUNT, count);
+                      bundle.putString(MyConstantKey.AMOUNT, amount);
+                      bundle.putString(MyConstantKey.JOB_ID, jobId);
+                      bundle.putString(MyConstantKey.SR_NO, srNo);
+                      bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                      bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                      bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
+                      bundle.putString(MyConstantKey.REATTEMPT, "0");
+                      //    ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+                      //   ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragment(), bundle, (AppCompatActivity) activity);
+                      ReplaceFragmentUtils.replaceFragment(new DeliveredChequeUploadFragmentNew2(), bundle, (AppCompatActivity) activity);
+
+                  } else if (jobSubType.equalsIgnoreCase("cash")) {
+
+                      Bundle bundle = new Bundle();
+                      bundle.putString(MyConstantKey.AMOUNT, amount);
+                      bundle.putString(MyConstantKey.JOB_ID, jobId);
+                      bundle.putString(MyConstantKey.SR_NO, srNo);
+                      bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                      bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                      bundle.putString(MyConstantKey.REATTEMPT, "0");
+                      bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
+                      ReplaceFragmentUtils.replaceFragment(new CashCalculateFragment(), bundle, (AppCompatActivity) activity);
+
+                  } else {
+
+                      Bundle bundle = new Bundle();
+                      bundle.putString(MyConstantKey.COUNT, count);
+                      bundle.putString(MyConstantKey.JOB_ID, jobId);
+                      bundle.putString(MyConstantKey.SR_NO, srNo);
+                      bundle.putString(MyConstantKey.LEAD_ID, leadId);
+                      bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                      bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
+                      bundle.putString(MyConstantKey.REATTEMPT, "0");
+                      ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragment(), bundle, (AppCompatActivity) activity);
+                      //   ReplaceFragmentUtils.replaceFragment(new DeliveredDocumentUploadFragmentNew(), bundle, (AppCompatActivity) activity);
+
+                      //   Toast.makeText(context, "it is not job subtype cheque or cash", Toast.LENGTH_SHORT).show();
+                  }
+
+              }
+              else {
+
+                  Bundle bundle = new Bundle();
+                  bundle.putString(MyConstantKey.JOB_ID, jobId);
+                  bundle.putString(MyConstantKey.SR_NO, srNo);
+                  bundle.putString(MyConstantKey.MOBILE_NO, mobile);
+                  bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
+                  bundle.putString(MyConstantKey.JOB_TYPE, jobType);
+                  bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
+                  bundle.putString(MyConstantKey.DELIVERY, delivery);
+                  bundle.putString(MyConstantKey.PICKUP_ADDRESS, address);
+                     bundle.putString(MyConstantKey.PICKUP_TIME, timeFrom);
+                  bundle.putString(MyConstantKey.PICKUP_TIME, createdAt);
+
+                  bundle.putString(MyConstantKey.AMOUNT, amount);
+                  bundle.putString(MyConstantKey.COUNT, count);
+                  bundle.putString(MyConstantKey.STAGE, stage);
+                  bundle.putString(MyConstantKey.LEAD_ID, leadId);
+
+                  bundle.putString(MyConstantKey.QRVERIFY, qrVerify);
+
+                  ReplaceFragmentUtils.replaceFragment(new PickupTrackingFragment(), bundle, (AppCompatActivity) activity);
+              }
 
             } else if (stage.equalsIgnoreCase("3")) {
                 Bundle bundle = new Bundle();
@@ -226,13 +268,16 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.JOB_SUBTYPE, jobSubType);
                 bundle.putString(MyConstantKey.TIMER, timer);
+                bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
                 ReplaceFragmentUtils.replaceFragment(new CaseEnquiryFragment(), bundle, (AppCompatActivity) activity);
 
             } else if (stage.equalsIgnoreCase("4")) {
+
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
                 ReplaceFragmentUtils.replaceFragment(new DeliveryBranchListFragment(), bundle, (AppCompatActivity) activity);
+
             } else if (stage.equalsIgnoreCase("5")) {
 
                 Bundle bundle = new Bundle();
@@ -246,7 +291,9 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
 
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
+                bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
                 ReplaceFragmentUtils.replaceFragment(new DeliveryTrackingFragment(), bundle, (AppCompatActivity) activity);
+
             } else if (stage.equalsIgnoreCase("6")) {
 
                 Bundle bundle = new Bundle();
@@ -254,8 +301,10 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
                 bundle.putString(MyConstantKey.LEAD_ID, leadId);
                 bundle.putString(MyConstantKey.SR_NO, srNo);
                 bundle.putString(MyConstantKey.TIMER, timer);
+                bundle.putString(MyConstantKey.CUSTOMER_NAME, customerName);
 
                 ReplaceFragmentUtils.replaceFragment(new CloseSrAcceptanceFragment(), bundle, (AppCompatActivity) activity);
+
             }
 
         });
@@ -299,7 +348,7 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
         });
 
         holder.binding.tvCancelReq.setOnClickListener(v -> {
-            recyclerViewItemClicked.onItemClicked("cancelRequest", leadId, "", "", "");
+            recyclerViewItemClicked.onItemClicked("cancelRequest", leadId, "", "", "","");
         });
 
         holder.binding.imgCall.setOnClickListener(v -> {
@@ -353,9 +402,9 @@ public class LeadListAdapter extends RecyclerView.Adapter<LeadListAdapter.MyView
             alertDialog.dismiss();
 
             if (whichButtonClicked.equalsIgnoreCase("accept")) {
-                recyclerViewItemClicked.onItemClicked("accept", leadId, stage, amount, count);   // not need of stage , amount and count
+                recyclerViewItemClicked.onItemClicked("accept", leadId, stage, amount, count,"");   // not need of stage , amount and count
             } else {
-                recyclerViewItemClicked.onItemClicked("proceedToJourney", leadId, stage, amount, count);
+                recyclerViewItemClicked.onItemClicked("proceedToJourney", leadId, stage, amount, count,"");
             }
 
         });

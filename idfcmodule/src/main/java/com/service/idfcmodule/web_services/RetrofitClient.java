@@ -15,7 +15,7 @@ public class RetrofitClient {
     private static RetrofitClient mInstance;
     private final Retrofit retrofit;
     private final String BASE_URL = "https://projects.ciphersquare.in/dsb/api/";             // uat
-  //  private final String BASE_URL = "https://dsb.relipay.in/api/";                            // live
+   // private final String BASE_URL = "https://dsb.relipay.in/api/";                            // live
 
     public RetrofitClient() {
 

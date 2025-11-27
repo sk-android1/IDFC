@@ -32,11 +32,23 @@
             android:layout_marginTop="40dp"/>
 
         <TextView
-            android:id="@+id/tvCustAcceptance"
+            android:id="@+id/tvCustomerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Customer Acceptance"
             android:textSize="22sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_20dp"
+            android:layout_marginHorizontal="@dimen/_20dp"/>
+
+        <TextView
+            android:id="@+id/tvCustAcceptance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Customer Acceptance"
+            android:textSize="18sp"
             android:textColor="@color/black"
             android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"

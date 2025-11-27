@@ -180,7 +180,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
         });
 
         binding.tvCancelReq.setOnClickListener(view -> {
-            getRemarkList(context, activity, leadId, retailerId);
+            getRemarkList(context, activity, leadId, retailerId,"","");
         });
 
     }
@@ -515,7 +515,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
 
         AlertDialog pDialog = MyProgressDialog.createAlertDialogDsb(context);
 
-        RetrofitClient.getInstance().getApi().bankList( retailerId)
+        RetrofitClient.getInstance().getApi().bankList( retailerId,"")
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -604,6 +604,9 @@ public class DeliveredChequeUploadFragment extends Fragment {
         RequestBody rbCount = RequestBody.create(MediaType.parse("text/plain"), count);
         RequestBody rbAmount = RequestBody.create(MediaType.parse("text/plain"), amount);
 
+        String geoCode = "lat" + "," + "longi";
+        RequestBody rbGeoCode = RequestBody.create(MediaType.parse("text/plain"), geoCode);
+
 //     //   RequestBody rbBankArray = RequestBody.create(MediaType.parse("text/plain"), jbn);
 //        RequestBody rbBankArray =RequestBody.create(MediaType.parse("application/json; charset=utf-8"),jbn);
 //        RequestBody rbChqNoArray = RequestBody.create(MediaType.parse("text/plain"), jcn);
@@ -613,7 +616,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
 //        Toast.makeText(activity, jbn+"\n"+jcn+"\n"+ja, Toast.LENGTH_SHORT).show();
 
         //   RetrofitClient.getInstance().getApi().uploadDeliveredDocument(rbLeadId, rbAgentId, uploadBankNameArr,uploadChqNoArr,uploadChqAmtArr,uploadImagesArr)
-        RetrofitClient.getInstance().getApi().uploadDeliveredCheque(rbLeadId, rbAgentId, rbReattempt, rbCount, rbAmount, uploadImagesArr)
+        RetrofitClient.getInstance().getApi().uploadDeliveredCheque(rbLeadId, rbAgentId, rbReattempt, rbCount, rbAmount,rbGeoCode, uploadImagesArr)
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -721,7 +724,7 @@ public class DeliveredChequeUploadFragment extends Fragment {
         String strAmount = etAmount.getText().toString().trim();
 
         //    RetrofitClient.getInstance().getApi().updateCount(leadId, retailerId, strCount, strAmount, jobSubType)
-        RetrofitClient.getInstance().getApi().updateCount(leadId, retailerId, count, jobSubType)
+        RetrofitClient.getInstance().getApi().updateCount(leadId, retailerId, count, jobSubType,"")
                 .enqueue(new Callback<JsonObject>() {
                     @SuppressLint("SetTextI18n")
                     @Override

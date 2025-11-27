@@ -16,6 +16,7 @@ public class MyConstantKey {
     public static String LATITUDE = "latitude";
     public static String LONGITUDE = "longitude";
     public static String LOGIN_TYPE = "loginType";
+    public static String RELIPAY_APP_VERSION = "version";
 
     public static String RETAILER = "Retailer";
     public static String PARTNER = "Partner";
@@ -42,6 +43,7 @@ public class MyConstantKey {
     public static String COUNT = "count";
     public static String REATTEMPT = "reAttempt";
     public static String TIMER = "timer";
+    public static String QRVERIFY = "qrVerify";
 
     public static String FULL_NAME = "fullName";
     public static String AADHAR_NO = "adharNo";

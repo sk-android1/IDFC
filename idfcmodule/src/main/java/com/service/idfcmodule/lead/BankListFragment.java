@@ -1,6 +1,8 @@
 package com.service.idfcmodule.lead;
 
+import static com.service.idfcmodule.IdfcMainActivity.appVersion;
 import static com.service.idfcmodule.IdfcMainActivity.comType;
+import static com.service.idfcmodule.IdfcMainActivity.retailerId;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.service.idfcmodule.R;
 import com.service.idfcmodule.adaptors.BankListAdapter;
@@ -80,12 +83,12 @@ public class BankListFragment extends Fragment {
 
         if (networkStatus.equalsIgnoreCase("Connected")) {
             getBankList();
-        }
-        else {
+            saveAppVersion();
+        } else {
             MyErrorDialog.activityFinishErrorDialog(context, activity, networkStatus);
         }
 
-       clickEvents();
+        clickEvents();
 
         return binding.getRoot();
 
@@ -94,7 +97,7 @@ public class BankListFragment extends Fragment {
     private void clickEvents() {
 
         binding.leadTopLy.imgBack.setOnClickListener(v -> {
-           activity.onBackPressed();
+            activity.onBackPressed();
         });
 
         binding.tvNext.setOnClickListener(v -> {
@@ -103,16 +106,62 @@ public class BankListFragment extends Fragment {
                 if (!selectedBankId.equalsIgnoreCase("")) {
                     Bundle bundle = new Bundle();
                     bundle.putString(MyConstantKey.BANK_ID, selectedBankId);
-                    ReplaceFragmentUtils.replaceFragment(new LeadListFragment(), bundle,(AppCompatActivity) activity);
+                    ReplaceFragmentUtils.replaceFragment(new LeadListFragment(), bundle, (AppCompatActivity) activity);
                     selectedBankId = "";
-                }
-                else {
+                } else {
                     Toast.makeText(context, "Please select Bank", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 MyErrorDialog.activityFinishErrorDialog(context, activity, networkStatus);
             }
 
+        });
+
+    }
+
+    private void saveAppVersion() {
+
+//        AlertDialog pd = MyProgressDialog.createAlertDialogDsb(context);
+//        pd.show();
+
+        RetrofitClient.getInstance().getApi().saveAppVersion(appVersion, retailerId).enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    try {
+
+                        JSONObject responseObject = new JSONObject(String.valueOf(response.body()));
+                        int statusCode = responseObject.getInt("statuscode");
+
+                        String message = responseObject.getString("message");
+
+                        if (statusCode == 200) {
+
+                            //    pd.dismiss();
+                            //    Snackbar.make(binding.mainLayout, "version saved", Snackbar.LENGTH_LONG).show();
+
+                        } else {
+                            //  pd.dismiss();
+                            Snackbar.make(binding.mainLayout, "version error", Snackbar.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        //  pd.dismiss();
+                        Snackbar.make(binding.mainLayout, "version error", Snackbar.LENGTH_LONG).show();
+                    }
+                } else {
+                    //  pd.dismiss();
+
+                    Snackbar.make(binding.mainLayout, "version error", Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                //   pd.dismiss();
+                Snackbar.make(binding.mainLayout, "version error", Snackbar.LENGTH_LONG).show();
+
+            }
         });
 
     }
@@ -139,15 +188,15 @@ public class BankListFragment extends Fragment {
 
                             bankList = new ArrayList<>();
 
-                            for (int i =0; i< dataArray.length(); i++) {
+                            for (int i = 0; i < dataArray.length(); i++) {
 
                                 JSONObject dataObject = dataArray.getJSONObject(i);
                                 String bankName = dataObject.optString("name");
-                             //   bankName = "Au Small Finance Bank";
+                                //   bankName = "Au Small Finance Bank";
                                 String bankId = dataObject.optString("id");
-                             //   bankId = "13";
+                                //   bankId = "13";
                                 String bankLogoUrl = dataObject.optString("image");
-                            //    bankLogoUrl = "https://companieslogo.com/img/orig/AUBANK.NS-1d52c885.png?t=1720244490";
+                                //    bankLogoUrl = "https://companieslogo.com/img/orig/AUBANK.NS-1d52c885.png?t=1720244490";
 
                                 BankModel bankModel = new BankModel();
                                 bankModel.setBankName(bankName);
@@ -200,8 +249,7 @@ public class BankListFragment extends Fragment {
                 selectedBankId = bankId;
                 Bundle bundle = new Bundle();
                 bundle.putString(MyConstantKey.BANK_ID, selectedBankId);
-                ReplaceFragmentUtils.replaceFragment(new LeadListFragment(), bundle,(AppCompatActivity) activity);
-
+                ReplaceFragmentUtils.replaceFragment(new LeadListFragment(), bundle, (AppCompatActivity) activity);
             }
         });
 

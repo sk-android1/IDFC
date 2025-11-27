@@ -59,6 +59,17 @@
                 android:src="@drawable/closing_acceptance" />
 
             <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18sp" />
+
+            <TextView
                 android:id="@+id/tvAcceptance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
